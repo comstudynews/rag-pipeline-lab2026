@@ -6,7 +6,7 @@ RAG Pipeline을 **Step by Step**으로 구현하는 누적형 실습 저장소�
 
 ## 실습 방식
 
-- `practice/`: 현재 Step에서 직접 작성할 부분에 `TODO`가 있습니다.
+- `practice/`: 현재 Step에서 직접 완성할 핵심 부분에 `TODO`가 있습니다.
 - `complete/`: 현재 Step까지 누적된 완성 코드입니다.
 - 처음 학습할 때는 Step 01부터 순서대로 진행합니다.
 - 각 Step의 `practice/`와 `complete/`는 독립적으로 실행할 수 있습니다.
@@ -24,10 +24,11 @@ RAG Pipeline을 **Step by Step**으로 구현하는 누적형 실습 저장소�
 | 07 | Prompt + LLM | 검색 Context로 답변 생성 |
 | 08 | RAG Pipeline | 공통 `rag_core.py`로 Pipeline 완성 |
 | 09 | Evaluation | Hit Rate, MRR, Groundedness |
-| 10 | Search Quality | MMR, BM25, Hybrid, Reranker, Advanced Retriever |
-| 11 | Advanced RAG | Query Rewrite/Expansion/Decomposition/Modular RAG |
+| 10 | Search Quality | MMR, BM25, Ensemble, Reranker, Advanced Retriever |
+| 11 | Advanced RAG | Query Rewrite, Expansion, Decomposition, Modular RAG |
 | 12 | LangGraph | State, Node, Edge, Conditional Edge |
 | 13 | Agentic RAG | Retrieve → Grade → Rewrite → Retry |
+| Final | Capstone | Baseline과 개선 Pipeline의 동일 평가셋 비교 |
 
 ## 빠른 시작
 
@@ -62,7 +63,30 @@ uv sync
 uv run python src/01_basic_rag.py
 ```
 
-> `uv`가 없다면 먼저 https://docs.astral.sh/uv/ 의 공식 설치 방법으로 설치하세요.
+> `uv`가 없다면 Astral uv 공식 문서의 설치 방법을 먼저 진행하세요.
+
+## Step 폴더 구조
+
+각 Step은 다음 구조를 가집니다.
+
+```text
+stepXX_topic/
+├── README.md
+├── practice/
+│   ├── .env.example
+│   ├── .python-version
+│   ├── pyproject.toml
+│   ├── data/
+│   └── src/
+└── complete/
+    ├── .env.example
+    ├── .python-version
+    ├── pyproject.toml
+    ├── data/
+    └── src/
+```
+
+`practice/`에도 앞 Step의 완성 파일은 그대로 들어 있습니다. **현재 Step에서 새로 배우는 부분만 TODO 상태**이므로 앞 단계부터 다시 만들 필요가 없습니다.
 
 ## 실습 환경
 
@@ -72,14 +96,29 @@ uv run python src/01_basic_rag.py
 - FAISS
 - BM25
 
-각 Step은 동일한 `pyproject.toml` 의존성 구성을 사용합니다.
+각 Step의 `pyproject.toml`에는 동일한 고정 버전 의존성이 들어 있습니다.
+
+## Final Capstone
+
+Step 13까지 진행한 뒤 종합실습 참고 구현을 실행할 수 있습니다.
+
+```bash
+cd final_capstone/complete
+cp .env.example .env
+uv sync
+uv run python src/capstone_compare.py
+```
+
+Windows PowerShell에서는 `cp` 대신 다음을 사용합니다.
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Capstone에서는 같은 테스트 질문으로 Baseline Similarity Search와 개선 Pipeline을 비교합니다. 작은 샘플에서는 Hit Rate가 동일할 수 있으므로, **점수 자체보다 같은 평가셋에서 검색 결과와 답변이 어떻게 달라졌는지 설명하는 것**이 핵심입니다.
 
 ## 보안
 
 - 실제 API Key가 들어 있는 `.env`는 Git에 올리지 않습니다.
 - 저장소에는 `.env.example`만 포함합니다.
-- 실습 데이터는 공개 가능한 샘플 문서만 사용합니다.
-
-## Notion 실습 자료
-
-이 저장소는 RAG Pipeline Step by Step 실습 흐름과 함께 사용하도록 구성되어 있습니다.
+- 실습 데이터는 공개 가능한 가상 샘플 문서만 사용합니다.
