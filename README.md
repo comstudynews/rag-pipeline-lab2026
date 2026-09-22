@@ -2,19 +2,22 @@
 
 RAG Pipeline을 **Step by Step**으로 구현하는 누적형 실습 저장소입니다.
 
-각 Step은 앞 단계의 완성 코드를 그대로 포함하고, 현재 단계의 핵심 기능만 추가합니다.
+각 Step은 앞 단계의 완성 코드를 그대로 포함하고, 현재 단계의 핵심 기능만 추가합니다.  
+구조는 AIOps 실습 저장소와 동일하게 각 Step 아래를 **practice / complete**로 나눴습니다.
 
 ## 실습 방식
 
 - `practice/`: 현재 Step에서 직접 완성할 핵심 부분에 `TODO`가 있습니다.
 - `complete/`: 현재 Step까지 누적된 완성 코드입니다.
-- 처음 학습할 때는 Step 01부터 순서대로 진행합니다.
-- 각 Step의 `practice/`와 `complete/`는 독립적으로 실행할 수 있습니다.
+- 처음 학습할 때는 Step 00부터 순서대로 진행합니다.
+- 이전 Step에서 완성한 파일은 다음 Step에도 그대로 누적됩니다.
+- 각 Step은 별도 폴더에서 독립적으로 실행할 수 있습니다.
 
 ## 전체 흐름
 
 | Step | 주제 | 핵심 내용 |
 |---|---|---|
+| 00 | Environment Setup | Python, API Key, 핵심 패키지 확인 |
 | 01 | Basic RAG | 가장 작은 RAG로 전체 흐름 확인 |
 | 02 | Document Loader | Text/PDF 문서 로딩 |
 | 03 | Text Splitter | Chunk 분할과 overlap |
@@ -37,10 +40,10 @@ git clone https://github.com/comstudynews/rag-pipeline-lab2026.git
 cd rag-pipeline-lab2026
 ```
 
-예를 들어 Step 01 완성본을 실행하려면:
+처음에는 Step 00 완성본에서 환경부터 확인합니다.
 
 ```bash
-cd step01_basic_rag/complete
+cd step00_environment_setup/complete
 cp .env.example .env
 ```
 
@@ -60,10 +63,12 @@ OPENAI_API_KEY=본인의_API_KEY
 
 ```bash
 uv sync
-uv run python src/01_basic_rag.py
+uv run python src/00_check_env.py
 ```
 
-> `uv`가 없다면 Astral uv 공식 문서의 설치 방법을 먼저 진행하세요.
+환경 확인이 끝나면 Step 01부터 순서대로 진행합니다.
+
+> `uv`가 없다면 Astral uv 공식 설치 방법으로 먼저 설치하세요.
 
 ## Step 폴더 구조
 
@@ -86,7 +91,9 @@ stepXX_topic/
     └── src/
 ```
 
-`practice/`에도 앞 Step의 완성 파일은 그대로 들어 있습니다. **현재 Step에서 새로 배우는 부분만 TODO 상태**이므로 앞 단계부터 다시 만들 필요가 없습니다.
+`practice/`에도 앞 Step의 완성 파일은 그대로 들어 있습니다. **현재 Step에서 새로 배우는 파일 또는 핵심 부분만 TODO 상태**이므로 이전 단계를 다시 만들 필요가 없습니다.
+
+예를 들어 Step 06에서는 `01_basic_rag.py`부터 `05_vectorstore.py`까지 이미 누적되어 있고, `06_retriever.py`의 현재 학습 부분만 practice에서 직접 완성합니다.
 
 ## 실습 환경
 
