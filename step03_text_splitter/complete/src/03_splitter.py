@@ -1,10 +1,8 @@
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-loader = TextLoader("data/sample.txt", encoding="utf-8")
-docs = loader.load()
+docs = TextLoader("data/sample.txt", encoding="utf-8").load()
 
-# 검색하기 좋은 크기로 문서를 나눕니다.
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=120,
     chunk_overlap=20,
