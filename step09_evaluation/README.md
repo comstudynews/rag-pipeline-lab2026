@@ -1,28 +1,30 @@
 # Step 09. RAG 평가
 
-Hit Rate, MRR, Groundedness로 Retrieval과 Generation을 나누어 평가합니다.
+Hit Rate, MRR, Groundedness로 검색과 생성 품질을 분리해 확인합니다.
 
-## 폴더
-- `practice/`: 현재 Step의 핵심 부분을 직접 완성합니다.
-- `complete/`: 교재 기준 완성 코드입니다.
+- 교재: [해당 장 바로가기](https://app.notion.com/p/3de91bd5a9ac81708276f90e67a4f588)
+- `practice/`: 현재 Step을 직접 완성하는 연습용
+- `complete/`: 교재 기준 완성 코드
 
 ## 실행
+
 1. `practice/` 또는 `complete/`로 이동합니다.
 2. `.env.example`을 `.env`로 복사합니다.
 3. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
-4. 잠긴 의존성을 설치합니다.
+4. 최초 1회 의존성을 동기화합니다.
 
 ```bash
-uv sync --locked
+uv sync
 ```
 
-5. 실행합니다.
+`uv.lock`이 생성된 뒤에는 잠긴 환경으로 실행합니다.
 
 ```bash
 uv run --locked python src/09_evaluation.py
 ```
 
-## 확인
-개선 전·후는 반드시 같은 평가셋으로 비교합니다.
+## 확인 원칙
 
-> 교재의 설명과 코드 순서를 기준으로 진행하고, `complete/`는 복습 및 오류 비교용으로 사용합니다.
+최종 출력만 보지 말고 **입력 → 현재 단계의 처리 → 출력**을 확인합니다. 검색이 포함된 Step에서는 LLM 답변보다 검색된 Document를 먼저 확인합니다.
+
+> 교재의 설명과 코드 순서를 기준으로 진행하고, `complete/`는 복습·오류 비교용으로 사용합니다.

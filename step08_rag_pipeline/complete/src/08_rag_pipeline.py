@@ -53,9 +53,3 @@ print("[질문]")
 print(question)
 print("\n[답변]")
 print(answer)
-
-print("\n[검색 문서 확인]")
-for i, doc in enumerate(retriever.invoke(question), start=1):
-    print(f"\n[{i}번 검색 문서]")
-    print(doc.page_content)
-    print("metadata:", doc.metadata)

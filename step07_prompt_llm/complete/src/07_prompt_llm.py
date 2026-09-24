@@ -7,7 +7,6 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 load_dotenv()
 
-# PREPROCESSING
 loader = TextLoader("data/sample.txt", encoding="utf-8")
 docs = loader.load()
 
@@ -21,7 +20,6 @@ embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 vectorstore = FAISS.from_documents(chunks, embeddings)
 retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
 
-# RUNTIME
 question = "대출한 책을 연장할 수 있나요?"
 retrieved_docs = retriever.invoke(question)
 

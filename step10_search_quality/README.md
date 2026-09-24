@@ -1,28 +1,30 @@
 # Step 10. 검색 품질 고도화
 
-Similarity, MMR, BM25, Hybrid, Reranker, Parent/MultiQuery/Ensemble/Reorder를 비교합니다.
+MMR, BM25, Hybrid, Reranker와 고급 Retriever를 비교합니다.
 
-## 폴더
-- `practice/`: 현재 Step의 핵심 부분을 직접 완성합니다.
-- `complete/`: 교재 기준 완성 코드입니다.
+- 교재: [해당 장 바로가기](https://app.notion.com/p/3de91bd5a9ac8154ae10ed5cb515d4d1)
+- `practice/`: 현재 Step을 직접 완성하는 연습용
+- `complete/`: 교재 기준 완성 코드
 
 ## 실행
+
 1. `practice/` 또는 `complete/`로 이동합니다.
 2. `.env.example`을 `.env`로 복사합니다.
 3. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
-4. 잠긴 의존성을 설치합니다.
+4. 최초 1회 의존성을 동기화합니다.
 
 ```bash
-uv sync --locked
+uv sync
 ```
 
-5. 실행합니다.
+`uv.lock`이 생성된 뒤에는 잠긴 환경으로 실행합니다.
 
 ```bash
 uv run --locked python src/10_search_quality.py
 ```
 
-## 확인
-복잡한 검색은 추가 호출·지연이 생기므로 현재 실패 원인에 맞는 전략만 선택합니다.
+## 확인 원칙
 
-> 교재의 설명과 코드 순서를 기준으로 진행하고, `complete/`는 복습 및 오류 비교용으로 사용합니다.
+최종 출력만 보지 말고 **입력 → 현재 단계의 처리 → 출력**을 확인합니다. 검색이 포함된 Step에서는 LLM 답변보다 검색된 Document를 먼저 확인합니다.
+
+> 교재의 설명과 코드 순서를 기준으로 진행하고, `complete/`는 복습·오류 비교용으로 사용합니다.

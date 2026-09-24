@@ -1,28 +1,39 @@
 # Step 02. Document Loader
 
-TextLoader로 sample.txt를 Document로 읽고 metadata를 확인합니다.
+TXT를 LangChain Document로 읽고, 선택 실습으로 PDF Loader를 확인합니다.
 
-## 폴더
-- `practice/`: 현재 Step의 핵심 부분을 직접 완성합니다.
-- `complete/`: 교재 기준 완성 코드입니다.
+- 교재: [해당 장 바로가기](https://app.notion.com/p/3de91bd5a9ac81c384d1dba9d557789f)
+- `practice/`: 현재 Step을 직접 완성하는 연습용
+- `complete/`: 교재 기준 완성 코드
 
 ## 실행
+
 1. `practice/` 또는 `complete/`로 이동합니다.
 2. `.env.example`을 `.env`로 복사합니다.
 3. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
-4. 잠긴 의존성을 설치합니다.
+4. 최초 1회 의존성을 동기화합니다.
 
 ```bash
-uv sync --locked
+uv sync
 ```
 
-5. 실행합니다.
+`uv.lock`이 생성된 뒤에는 잠긴 환경으로 실행합니다.
 
 ```bash
 uv run --locked python src/02_loader.py
 ```
 
-## 확인
-PDF는 src/02_pdf_loader.py 선택 실습이며, 복잡한 PDF는 Document Parse 계열을 별도로 검토합니다.
+PDF 선택 실습:
 
-> 교재의 설명과 코드 순서를 기준으로 진행하고, `complete/`는 복습 및 오류 비교용으로 사용합니다.
+```bash
+uv run --locked python src/02_pdf_loader.py
+```
+
+텍스트를 선택·복사할 수 있는 PDF를 `data/sample.pdf`로 준비합니다.
+
+
+## 확인 원칙
+
+최종 출력만 보지 말고 **입력 → 현재 단계의 처리 → 출력**을 확인합니다. 검색이 포함된 Step에서는 LLM 답변보다 검색된 Document를 먼저 확인합니다.
+
+> 교재의 설명과 코드 순서를 기준으로 진행하고, `complete/`는 복습·오류 비교용으로 사용합니다.
