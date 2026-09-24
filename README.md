@@ -1,48 +1,47 @@
 # RAG Pipeline Lab 2026
 
-RAG Pipeline을 **Step by Step**으로 구현하는 누적형 실습 저장소입니다.
+LangChain 기반 RAG Pipeline을 **00장 → 14장 순서로 누적 학습**하는 수업용 저장소입니다.
 
-각 Step은 앞 단계의 완성 코드를 그대로 포함하고, 현재 단계의 핵심 기능만 추가합니다.  
-구조는 AIOps 실습 저장소와 동일하게 각 Step 아래를 **practice / complete**로 나눴습니다.
+- 교재: [RAG Pipeline 설계 및 구축 — Step by Step Cookbook](https://app.notion.com/p/3de91bd5a9ac81219435d1f41cc050df)
+- 수업용 소스: 이 저장소의 `practice/`와 `complete/`
+- Main Path: **OpenAI + FAISS**
+- 선택 학습: **Upstage · Chroma · Pinecone · LangSmith · Ollama**
 
-## 실습 방식
+## 학습 방식
 
-- `practice/`: 현재 Step에서 직접 완성할 핵심 부분에 `TODO`가 있습니다.
-- `complete/`: 현재 Step까지 누적된 완성 코드입니다.
-- 처음 학습할 때는 Step 00부터 순서대로 진행합니다.
-- 이전 Step에서 완성한 파일은 다음 Step에도 그대로 누적됩니다.
-- 각 Step은 별도 폴더에서 독립적으로 실행할 수 있습니다.
+각 Step은 앞 단계까지의 코드를 누적합니다.
 
-## 전체 흐름
+- `practice/`: 현재 Step에서 직접 완성할 부분을 `TODO`로 남긴 연습 예제
+- `complete/`: 해당 Step까지 완성된 기준 코드
+- 기본 실행 환경: Python 3.11 + uv
+- 의존성은 `uv.lock`을 기준으로 고정합니다.
+- 교재와 GitHub의 장 번호 / 파일 번호를 맞춰 진행합니다.
 
-| Step | 주제 | 핵심 내용 |
+## 교재 ↔ GitHub 매핑
+
+| 교재 | GitHub | 핵심 내용 |
 |---|---|---|
-| 00 | Environment Setup | Python, API Key, 핵심 패키지 확인 |
-| 01 | Basic RAG | 가장 작은 RAG로 전체 흐름 확인 |
-| 02 | Document Loader | Text/PDF 문서 로딩 |
-| 03 | Text Splitter | Chunk 분할과 overlap |
-| 04 | Embedding | Embedding과 Cosine Similarity |
-| 05 | Vector Store | FAISS 저장과 검색 |
-| 06 | Retriever | Top-K 검색과 결과 확인 |
-| 07 | Prompt + LLM | 검색 Context로 답변 생성 |
-| 08 | RAG Pipeline | 공통 `rag_core.py`로 Pipeline 완성 |
-| 09 | Evaluation | Hit Rate, MRR, Groundedness |
-| 10 | Search Quality | MMR, BM25, Ensemble, Reranker, Advanced Retriever |
-| 11 | Advanced RAG | Query Rewrite, Expansion, Decomposition, Modular RAG |
-| 12 | LangGraph | State, Node, Edge, Conditional Edge |
-| 13 | Agentic RAG | Retrieve → Grade → Rewrite → Retry |
-| Final | Capstone | Baseline과 개선 Pipeline의 동일 평가셋 비교 |
+| 00 | `step00_environment_setup` | Python, uv, API Key, 선택 Provider, 환경 점검 |
+| 01 | `step01_basic_rag` | 가장 작은 RAG로 전체 흐름 확인 |
+| 02 | `step02_document_loader` | TXT/PDF Loader, 선택: Document Parse |
+| 03 | `step03_text_splitter` | Chunk, overlap, 검색 단위 설계 |
+| 04 | `step04_embedding` | Embedding, Cosine Similarity, Provider 교체 개념 |
+| 05 | `step05_vector_store` | FAISS와 Vector Store 개념 |
+| 06 | `step06_retriever` | Retriever, Top-K, 검색 결과 확인 |
+| 07 | `step07_prompt_llm` | Prompt + LLM, 검색 근거 기반 답변 |
+| 08 | `step08_rag_pipeline` | `rag_core.py`, LCEL 기반 RAG Pipeline 완성 |
+| 09 | `step09_evaluation` | Hit Rate, MRR, Groundedness |
+| 10 | `step10_search_quality` | MMR, BM25, Hybrid, Reranker, Advanced Retriever |
+| 11 | `step11_advanced_rag` | Rewrite, Expansion, Decomposition, Routing, Modular RAG |
+| 12 | `step12_langgraph` | State, Node, Edge, Conditional Edge |
+| 13 | `step13_agentic_rag` | Retrieve → Grade → Rewrite → Retry/Fallback |
+| 14 | `final_capstone` | Baseline과 개선 Pipeline 비교 종합실습 |
 
 ## 빠른 시작
 
 ```bash
 git clone https://github.com/comstudynews/rag-pipeline-lab2026.git
 cd rag-pipeline-lab2026
-```
-
-처음에는 Step 00 완성본에서 환경부터 확인합니다.
-
-```bash
 cd step00_environment_setup/complete
 cp .env.example .env
 ```
@@ -53,26 +52,75 @@ Windows PowerShell:
 Copy-Item .env.example .env
 ```
 
-`.env`에 본인의 OpenAI API Key를 입력합니다.
+기본 실습은 `OPENAI_API_KEY`가 필요합니다.
 
 ```text
-OPENAI_API_KEY=본인의_API_KEY
+OPENAI_API_KEY=본인의_OPENAI_API_KEY
+
+# 선택
+UPSTAGE_API_KEY=
+PINECONE_API_KEY=
+LANGSMITH_TRACING=false
+LANGSMITH_API_KEY=
+LANGSMITH_PROJECT=rag-pipeline-lab2026
 ```
 
-그 다음 실행합니다.
+설치 및 실행:
 
 ```bash
-uv sync
-uv run python src/00_check_env.py
+uv sync --locked
+uv run --locked python src/00_check_env.py
 ```
 
-환경 확인이 끝나면 Step 01부터 순서대로 진행합니다.
+## 실습 환경
 
-> `uv`가 없다면 Astral uv 공식 설치 방법으로 먼저 설치하세요.
+교재 기준 고정 버전:
+
+```text
+Python 3.11
+langchain==1.4.2
+langchain-openai==1.6.3
+langchain-community==0.4.2
+langchain-classic==1.0.8
+langchain-text-splitters==1.1.2
+langgraph==1.2.11
+faiss-cpu==1.15.1
+pypdf==6.19.0
+python-dotenv==1.2.3
+rank-bm25==0.2.2
+```
+
+선택 Provider를 사용할 때만 추가 패키지를 설치합니다.
+
+```bash
+uv add langchain-upstage
+uv add langchain-pinecone pinecone
+uv add langsmith
+uv add langchain-ollama
+```
+
+선택 패키지를 추가했다면 `uv.lock`이 바뀌므로 수업에서는 검증된 Lock 파일을 사용합니다.
+
+## Ollama 선택 실습
+
+Ollama는 Vector DB가 아니라 **Local LLM / Embedding Runtime**입니다.
+
+```bash
+ollama pull qwen3:4b
+ollama pull embeddinggemma
+```
+
+LangChain에서는 `ChatOllama`, `OllamaEmbeddings`로 OpenAI 부분을 교체할 수 있습니다. Local 실행은 API Key가 필요 없지만 CPU/GPU/RAM 성능에 따라 속도가 크게 달라질 수 있으므로 Main Path에는 포함하지 않습니다.
+
+## Vector Store 선택 기준
+
+- FAISS: 가장 가볍게 Vector Search 원리 학습
+- Chroma: Local In-Memory / Persistent / Server / Cloud
+- Pinecone: 관리형 Cloud Vector DB
+
+LLM/Embedding Provider와 Vector Store는 별개 선택입니다. 예: `Ollama + FAISS`, `OpenAI + Chroma`, `Upstage + Pinecone`.
 
 ## Step 폴더 구조
-
-각 Step은 다음 구조를 가집니다.
 
 ```text
 stepXX_topic/
@@ -91,41 +139,22 @@ stepXX_topic/
     └── src/
 ```
 
-`practice/`에도 앞 Step의 완성 파일은 그대로 들어 있습니다. **현재 Step에서 새로 배우는 파일 또는 핵심 부분만 TODO 상태**이므로 이전 단계를 다시 만들 필요가 없습니다.
+교재의 코드를 직접 작성하는 것을 기본으로 하고, `complete/`는 복습·오류 비교·완성본 확인용으로 사용합니다.
 
-예를 들어 Step 06에서는 `01_basic_rag.py`부터 `05_vectorstore.py`까지 이미 누적되어 있고, `06_retriever.py`의 현재 학습 부분만 practice에서 직접 완성합니다.
-
-## 실습 환경
-
-- Python 3.11
-- LangChain / LangGraph
-- OpenAI Chat / Embedding
-- FAISS
-- BM25
-
-각 Step의 `pyproject.toml`에는 동일한 고정 버전 의존성이 들어 있습니다.
-
-## Final Capstone
-
-Step 13까지 진행한 뒤 종합실습 참고 구현을 실행할 수 있습니다.
+## 종합실습
 
 ```bash
 cd final_capstone/complete
 cp .env.example .env
-uv sync
-uv run python src/capstone_compare.py
+uv sync --locked
+uv run --locked python src/capstone_compare.py
 ```
 
-Windows PowerShell에서는 `cp` 대신 다음을 사용합니다.
-
-```powershell
-Copy-Item .env.example .env
-```
-
-Capstone에서는 같은 테스트 질문으로 Baseline Similarity Search와 개선 Pipeline을 비교합니다. 작은 샘플에서는 Hit Rate가 동일할 수 있으므로, **점수 자체보다 같은 평가셋에서 검색 결과와 답변이 어떻게 달라졌는지 설명하는 것**이 핵심입니다.
+종합실습은 기술을 많이 넣는 것이 목적이 아닙니다. 같은 평가 질문을 사용해 **Baseline → 문제 진단 → 개선 전략 적용 → 전·후 비교** 순서로 근거를 남기는 것이 핵심입니다.
 
 ## 보안
 
-- 실제 API Key가 들어 있는 `.env`는 Git에 올리지 않습니다.
-- 저장소에는 `.env.example`만 포함합니다.
-- 실습 데이터는 공개 가능한 가상 샘플 문서만 사용합니다.
+- 실제 `.env`와 API Key는 Git에 올리지 않습니다.
+- `.env.example`에는 변수명만 둡니다.
+- 내부 문서·개인정보·민감정보는 공개 저장소의 실습 데이터로 사용하지 않습니다.
+- LangSmith Tracing을 사용할 때는 입력·출력이 외부 Observability 서비스로 전송될 수 있음을 확인합니다.
