@@ -7,7 +7,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 load_dotenv()
 
 # 1) 원본 문서를 읽습니다.
-docs = TextLoader("data/sample.txt", encoding="utf-8").load()
+loader = TextLoader("data/sample.txt", encoding="utf-8")
+docs = loader.load()
 
 # 2) 검색하기 좋은 크기의 Chunk로 나눕니다.
 splitter = RecursiveCharacterTextSplitter(
@@ -21,14 +22,14 @@ embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 vectorstore = FAISS.from_documents(chunks, embeddings)
 
 # 4) Vector Store를 Retriever 인터페이스로 감쌉니다.
-retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+# k=3은 관련 문서 3개를 반환하라는 뜻입니다.
+retriever = vectorstore.as_retriever(
+    search_kwargs={"k": 3}
+)
 
 # 5) 질문을 넣고 실제 검색 결과를 확인합니다.
 question = "토요일에는 몇 시까지 운영하나요?"
 results = retriever.invoke(question)
 
-print("질문:", question)
 for i, doc in enumerate(results, start=1):
-    print(f"\n[{i}]")
-    print(doc.page_content)
-    print("metadata:", doc.metadata)
+    print(f"\n[{i}] {doc.page_content}")
