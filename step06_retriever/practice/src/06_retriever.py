@@ -11,6 +11,7 @@ chunks = RecursiveCharacterTextSplitter(
     chunk_size=120,
     chunk_overlap=20,
 ).split_documents(docs)
+
 vectorstore = FAISS.from_documents(
     chunks,
     OpenAIEmbeddings(model="text-embedding-3-small"),
@@ -21,3 +22,9 @@ retriever = None
 
 if retriever is None:
     raise SystemExit("TODO: vectorstore.as_retriever(...)를 완성하세요.")
+
+question = "토요일에는 몇 시까지 운영하나요?"
+results = retriever.invoke(question)
+
+for i, doc in enumerate(results, start=1):
+    print(f"\n[{i}] {doc.page_content}")
