@@ -1,17 +1,25 @@
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-docs = TextLoader("data/sample.txt", encoding="utf-8").load()
+loader = TextLoader("data/sample.txt", encoding="utf-8")
+docs = loader.load()
 
-# TODO: chunk_size=120, chunk_overlap=20으로 수정하세요.
-splitter = RecursiveCharacterTextSplitter(
+# TODO: 교재 기준으로 수정하세요.
+# - chunk_size=120
+# - chunk_overlap=20
+# - add_start_index=True
+text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=120,
     chunk_overlap=0,
+    add_start_index=False,
 )
 
-chunks = splitter.split_documents(docs)
+chunks = text_splitter.split_documents(docs)
 
+print("원본 Document 수:", len(docs))
 print("Chunk 수:", len(chunks))
+
 for i, chunk in enumerate(chunks, start=1):
     print(f"\n--- Chunk {i} ---")
+    print("metadata:", chunk.metadata)
     print(chunk.page_content)
