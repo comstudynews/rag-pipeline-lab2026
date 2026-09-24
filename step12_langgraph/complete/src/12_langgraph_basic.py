@@ -10,14 +10,17 @@ class GraphState(TypedDict):
 
 
 def normalize_question(state: GraphState):
-    # 앞뒤 공백을 제거해 다음 Node에서 사용할 값을 만듭니다.
-    normalized = state["question"].strip()
-    return {"normalized_question": normalized}
+    question = state["question"].strip()
+    return {
+        "normalized_question": question,
+    }
 
 
 def count_length(state: GraphState):
-    # 이전 Node가 만든 normalized_question의 길이를 계산합니다.
-    return {"length": len(state["normalized_question"])}
+    text = state["normalized_question"]
+    return {
+        "length": len(text),
+    }
 
 
 def short_question(state: GraphState):
@@ -31,7 +34,6 @@ def long_question(state: GraphState):
 
 
 def route_by_length(state: GraphState):
-    # State의 length 값으로 다음 Node를 선택합니다.
     if state["length"] <= 20:
         return "short"
     return "long"
