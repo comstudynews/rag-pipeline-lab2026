@@ -12,5 +12,7 @@ if embeddings is None:
     raise SystemExit("TODO: OpenAIEmbeddings를 생성하세요.")
 
 vector = embeddings.embed_query(text)
+
 print("벡터 길이:", len(vector))
+print("앞부분 10개 값:")
 print(vector[:10])
