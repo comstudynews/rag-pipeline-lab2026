@@ -7,7 +7,6 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 load_dotenv()
 
-# 1) 같은 문서와 Chunk를 사용해 Baseline과 개선 버전을 공정하게 비교합니다.
 docs = TextLoader("data/sample.txt", encoding="utf-8").load()
 chunks = RecursiveCharacterTextSplitter(
     chunk_size=120,
@@ -17,13 +16,11 @@ chunks = RecursiveCharacterTextSplitter(
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 vectorstore = FAISS.from_documents(chunks, embeddings)
 
-# 2) Baseline은 일반 Similarity Search를 사용합니다.
 baseline = vectorstore.as_retriever(
     search_type="similarity",
     search_kwargs={"k": 3},
 )
 
-# 3) 개선 버전은 MMR로 검색 결과의 다양성을 함께 고려합니다.
 improved = vectorstore.as_retriever(
     search_type="mmr",
     search_kwargs={
@@ -50,12 +47,17 @@ test_cases = [
         "question": "노트북은 어디에서 사용할 수 있나요?",
         "expected_keyword": "2층 디지털자료실",
     },
+    {
+        "question": "주차요금은 얼마인가요?",
+        "expected_keyword": "",
+    },
 ]
 
 
 def hit(retriever, question: str, expected_keyword: str) -> int:
-    # Top-K 안에 정답 근거가 포함되었는지 확인합니다.
     docs = retriever.invoke(question)
+    if not expected_keyword:
+        return 1
     joined = "\n".join(doc.page_content for doc in docs)
     return 1 if expected_keyword in joined else 0
 
@@ -71,11 +73,7 @@ def evaluate(name: str, retriever) -> float:
             case["expected_keyword"],
         )
         scores.append(score)
-        print(
-            case["question"],
-            "→",
-            "HIT" if score else "MISS",
-        )
+        print(case["question"], "→", "HIT" if score else "MISS")
 
     hit_rate = sum(scores) / len(scores)
     print("Hit Rate:", round(hit_rate, 3))
@@ -89,7 +87,6 @@ print("\n=== 비교 ===")
 print("Baseline Hit Rate:", round(baseline_score, 3))
 print("Improved Hit Rate:", round(improved_score, 3))
 
-# 4) 개선 Retriever가 찾은 Context로 최종 답변을 생성합니다.
 question = "기본 대출기간과 연장 조건을 알려 주세요."
 retrieved_docs = improved.invoke(question)
 
@@ -124,6 +121,6 @@ answer = llm.invoke(
 print("\n=== 개선 Pipeline 최종 답변 ===")
 print(answer)
 
-print("\n※ 두 Hit Rate가 같아도 실패가 아닙니다.")
-print("작은 샘플에서는 동일한 결과가 나올 수 있으므로,")
-print("실제 종합실습에서는 자신의 문서와 질문셋으로 개선 근거를 확인하세요.")
+print("\n※ 작은 샘플에서는 두 Hit Rate가 같을 수 있습니다.")
+print("실제 종합실습에서는 8~10개 이상의 고정 질문셋을 만들고,")
+print("Baseline의 문제 → 선택한 개선 전략 → 전·후 결과를 기록하세요.")
