@@ -48,10 +48,25 @@ uv python install 3.11
 
 ## 실행
 
-1. `practice/` 또는 `complete/`로 이동합니다.
-2. `.env.example`을 `.env`로 복사합니다.
-3. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
-4. 최초 1회 의존성을 동기화합니다.
+`practice/`와 `complete/`는 각각 `pyproject.toml`을 가진 독립 실행 폴더입니다.
+
+수업 실습:
+
+```bash
+cd step00_environment_setup/practice
+```
+
+완성 코드 확인:
+
+```bash
+cd step00_environment_setup/complete
+```
+
+이후 명령은 선택한 하위 폴더에서 실행합니다.
+
+1. `.env.example`을 `.env`로 복사합니다.
+2. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
+3. 최초 1회 의존성을 동기화합니다.
 
 ```bash
 uv sync
