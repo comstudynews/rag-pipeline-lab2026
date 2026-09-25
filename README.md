@@ -5,7 +5,7 @@ LangChain 기반 RAG Pipeline을 **00장 → 14장 순서로 누적 학습**하�
 - 교재: [RAG Pipeline 설계 및 구축 — Step by Step Cookbook](https://app.notion.com/p/3de91bd5a9ac81219435d1f41cc050df)
 - Main Path: **OpenAI + FAISS**
 - 선택 학습: **Upstage · Chroma · Pinecone · LangSmith · Ollama**
-- 기본 환경: **Python 3.11 + uv**
+- 기본 환경: **Python 3.11 + uv + VS Code**
 
 ## 1. 수업 진행 방식
 
@@ -72,8 +72,15 @@ uv python install 3.11
 
 ```bash
 git clone https://github.com/comstudynews/rag-pipeline-lab2026.git
-cd rag-pipeline-lab2026
-cd step00_environment_setup/practice
+```
+
+Clone이 끝나면 VS Code에서 **File → Open Folder...**를 선택해 `rag-pipeline-lab2026/step00_environment_setup/practice` 폴더를 엽니다.
+
+VS Code에서 **Terminal → New Terminal**을 연 뒤 `.env.example`을 `.env`로 복사합니다.
+
+macOS / Linux:
+
+```bash
 cp .env.example .env
 ```
 
@@ -83,7 +90,7 @@ Windows PowerShell:
 Copy-Item .env.example .env
 ```
 
-`practice/`와 `complete/`는 각각 독립 실행 폴더입니다. 수업은 `practice/`에서 진행하고, 완성 코드 확인이 필요하면 같은 Step의 `complete/`로 이동합니다.
+수업은 각 Step의 `practice/` 폴더를 VS Code에서 직접 열어 진행합니다. 완성 코드 확인이 필요할 때만 같은 Step의 `complete/` 폴더를 엽니다.
 
 기본 실습은 `OPENAI_API_KEY`가 필요합니다.
 
@@ -178,9 +185,11 @@ stepXX_topic/
 
 ## 7. 종합실습
 
+VS Code에서 **File → Open Folder...**로 `final_capstone/practice` 폴더를 엽니다. 예시 완성 코드를 확인할 때는 `final_capstone/complete` 폴더를 엽니다.
+
+VS Code 터미널에서 다음 명령을 실행합니다.
+
 ```bash
-cd final_capstone/complete
-cp .env.example .env
 uv sync
 uv run --locked python src/capstone_compare.py
 ```
