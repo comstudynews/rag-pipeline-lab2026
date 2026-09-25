@@ -1,6 +1,18 @@
 # Step 00. 개발환경·API Key 준비
 
-Python 3.11, uv, API Key, 선택 Provider와 실습환경을 준비합니다.
+Python 3.11, uv, API Key, 핵심 패키지, Provider 통합 패키지와 Ollama Runtime을 미리 점검합니다.
+
+Step 00은 RAG 기능 구현이 아니라 **사전 환경 점검(Preflight Check)** 단계입니다. 수업 중간에 설치·인증 문제로 흐름이 끊기지 않도록 이후 실습에 필요한 환경을 먼저 준비하고 확인합니다.
+
+완료 기준:
+- Python 3.11과 uv가 정상 동작
+- `.env`의 필요한 환경변수를 읽을 수 있음
+- 핵심 패키지 설치 및 버전 확인
+- Upstage, Pinecone, LangSmith, Ollama 통합 패키지 설치 확인
+- Ollama를 사용할 경우 Runtime과 Model 준비
+- `src/00_check_env.py` 실행 후 `핵심 환경 확인: OK`
+
+> `OK`는 현재 PC의 설치·환경변수·패키지 상태가 준비되었다는 뜻입니다. API Key의 실제 유효성, Credit·Quota, Provider 응답은 해당 기능을 사용하는 Step에서 다시 확인합니다.
 
 - 교재: [해당 장 바로가기](https://app.notion.com/p/3de91bd5a9ac8171bf44dd42fb7ad357)
 - `practice/`: 현재 Step을 직접 완성하는 연습용
@@ -121,8 +133,45 @@ uv 캐시와 프로젝트가 서로 다른 드라이브에 있을 때 나타날 
 uv run --locked python src/00_check_env.py
 ```
 
+## Provider 통합 패키지 사전 점검
+
+Step 00에서는 뒤의 장에서 사용할 가능성이 있는 통합 패키지까지 미리 설치해 설치 가능 여부를 확인합니다.
+
+```bash
+uv add langchain-upstage
+uv add langchain-pinecone pinecone
+uv add langsmith
+uv add langchain-ollama
+```
+
+설치 후 다시 실행합니다.
+
+```bash
+uv run --locked python src/00_check_env.py
+```
+
+예상 확인 항목:
+
+```text
+[선택 Provider 통합]
+Upstage: 설치됨
+Pinecone: 설치됨
+Ollama: 설치됨
+
+핵심 환경 확인: OK
+```
+
+Ollama는 Python 패키지와 별도로 Runtime과 Model도 확인합니다.
+
+```bash
+ollama --version
+ollama list
+```
+
+각 Step은 별도의 `practice/` 환경을 사용하므로 이후 장에서는 해당 Step 폴더에서 `uv sync`로 다시 환경을 구성합니다. Step 00의 목적은 모든 패키지를 한 환경에서 계속 쓰는 것이 아니라, **현재 PC에서 이후 실습 도구를 설치하고 사용할 준비가 되는지 미리 검증하는 것**입니다.
+
 ## 확인 원칙
 
-최종 출력만 보지 말고 **입력 → 현재 단계의 처리 → 출력**을 확인합니다. 검색이 포함된 Step에서는 LLM 답변보다 검색된 Document를 먼저 확인합니다.
+최종 출력만 보지 말고 **Python 버전 → 환경변수 → 핵심 패키지 → Provider 통합 → Runtime** 순서로 확인합니다.
 
 > 교재의 설명과 코드 순서를 기준으로 진행하고, `complete/`는 복습·오류 비교용으로 사용합니다.
