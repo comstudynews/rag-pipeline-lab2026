@@ -44,8 +44,8 @@ for package in packages:
     # TODO: version(package)를 사용하세요.
     print(package, "TODO")
 
-# TODO 4: 선택 Provider 통합이 설치되어 있는지 find_spec()으로 확인하세요.
-optional_modules = {
+# TODO 4: Provider 통합 패키지가 설치되어 있는지 find_spec()으로 확인하세요.
+provider_modules = {
     "langchain_upstage": "Upstage (langchain-upstage)",
     "langchain_pinecone": "Pinecone (langchain-pinecone)",
     "langsmith": "LangSmith (langsmith)",
@@ -53,7 +53,7 @@ optional_modules = {
 }
 
 print("\n[Provider 통합 패키지]")
-for module, label in optional_modules.items():
+for module, label in provider_modules.items():
     print(label, "TODO")
 
 print("\nTODO: Step 00 환경 확인 코드를 완성하세요.")
