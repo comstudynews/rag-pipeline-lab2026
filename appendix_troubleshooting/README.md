@@ -10,11 +10,11 @@
 *그림: 문제를 순서대로 좁혀 가는 문제 해결 흐름 예시 — 출처: *[*Wikimedia Commons*](https://commons.wikimedia.org/wiki/File:Problem-Solving.svg)*, Public Domain*
 RAG 실습 오류는 코드 자체보다 **실행 위치, 가상환경, API Key, 패키지 설치 상태**에서 발생하는 경우가 많습니다.
 오류가 발생하면 다음 순서로 확인합니다.
-① 현재 터미널이 해당 Step의 `practice/` 또는 `complete/` 폴더인가?  
-② 처음 실행이라면 `uv sync`를 실행했는가?  
+① VS Code에서 해당 Step의 `practice/` 또는 `complete/` 폴더를 열었는가?  
+② VS Code 터미널에서 처음 실행할 때 `uv sync`를 실행했는가?  
 ③ 이후 실행은 `uv run --locked python ...` 형식인가?  
-④ 현재 Step 폴더의 `.env`에 필요한 API Key가 있는가?  
-⑤ 파일 경로가 현재 Step의 `data/`, `src/` 구조와 일치하는가?
+④ 현재 작업 폴더의 `.env`에 필요한 API Key가 있는가?  
+⑤ 파일 경로가 현재 작업 폴더의 `data/`, `src/` 구조와 일치하는가?
 각 Step은 다음 구조를 사용합니다.
 ```plain text
 stepXX_topic/
@@ -47,9 +47,8 @@ ModuleNotFoundError: No module named 'langchain_openai'
 - 시스템 Python으로 실행함
 - 다른 Step의 가상환경을 사용함
 ### 해결
-실행할 Step의 `practice/` 또는 `complete/` 폴더로 이동합니다.
+VS Code에서 **File → Open Folder...**로 `step01_basic_rag/practice` 폴더를 열고 새 터미널에서 실행합니다.
 ```bash
-cd step01_basic_rag/practice
 uv sync
 uv run --locked python src/01_basic_rag.py
 ```
@@ -75,27 +74,16 @@ OPENAI_API_KEY=본인의_API_KEY
 API Key를 Python 소스에 직접 적거나 GitHub에 업로드하지 않습니다. `.env`는 `.gitignore`에 포함합니다.
 ## A.5 `FileNotFoundError: data/sample.txt`
 ### 원인
-상대경로는 **현재 터미널의 실행 위치**를 기준으로 해석됩니다.
-잘못된 예:
-```plain text
-현재 위치: rag-pipeline-lab2026
-실행: uv run --locked python step08_rag_pipeline/practice/src/08_rag_pipeline.py
-```
-코드는 `data/sample.txt`를 현재 작업 폴더 기준으로 찾기 때문에 파일을 찾지 못할 수 있습니다.
+상대경로는 **VS Code에서 연 작업 폴더**를 기준으로 해석됩니다. 저장소 루트를 열어 둔 상태에서 하위 Step의 파일만 실행하면 `data/sample.txt` 경로가 맞지 않을 수 있습니다.
+
 ### 권장 실행
-해당 Step의 `practice/` 또는 `complete/`로 이동한 뒤 실행합니다.
+VS Code에서 **File → Open Folder...**로 `step08_rag_pipeline/practice` 폴더를 열고 새 터미널에서 실행합니다.
+
 ```bash
-cd step08_rag_pipeline/practice
 uv run --locked python src/08_rag_pipeline.py
 ```
-현재 위치 확인:
-```bash
-pwd
-```
-Windows PowerShell:
-```powershell
-Get-Location
-```
+
+VS Code Explorer의 최상위 폴더가 현재 Step의 `practice/` 또는 `complete/`인지 확인합니다.
 ## A.6 한글이 깨지거나 `UnicodeDecodeError`가 발생하는 경우
 TXT Loader를 사용할 때 인코딩을 명시합니다.
 ```python
