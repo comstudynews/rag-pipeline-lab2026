@@ -64,7 +64,7 @@ print("\n[핵심 패키지]")
 for package in packages:
     print(f"{package}: {version(package)}")
 
-optional_modules = {
+provider_modules = {
     "langchain_upstage": "Upstage (langchain-upstage)",
     "langchain_pinecone": "Pinecone (langchain-pinecone)",
     "langsmith": "LangSmith (langsmith)",
@@ -72,7 +72,7 @@ optional_modules = {
 }
 
 print("\n[Provider 통합 패키지]")
-for module, label in optional_modules.items():
+for module, label in provider_modules.items():
     print(label + ":", "설치됨" if find_spec(module) else "미설치")
 
 print("\n핵심 환경 확인: OK")
