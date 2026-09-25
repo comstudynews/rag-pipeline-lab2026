@@ -9,10 +9,13 @@
 - `results/evaluation.md`: Baseline과 개선 결과 기록
 - `results/design.md`: 설계 산출물 기록
 
-실행 예시:
+실습은 VS Code에서 **File → Open Folder...**로 `final_capstone/practice` 폴더를 열어 진행합니다. 예시 완성 코드를 확인할 때만 `final_capstone/complete` 폴더를 엽니다.
+
+VS Code에서 **Terminal → New Terminal**을 연 뒤 실행합니다.
+
+macOS / Linux:
 
 ```bash
-cd final_capstone/complete
 cp .env.example .env
 uv sync
 uv run --locked python src/capstone_compare.py
@@ -21,7 +24,6 @@ uv run --locked python src/capstone_compare.py
 Windows PowerShell:
 
 ```powershell
-cd final_capstone/complete
 Copy-Item .env.example .env
 uv sync
 uv run --locked python src/capstone_compare.py
