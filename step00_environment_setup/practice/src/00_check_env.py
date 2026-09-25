@@ -46,12 +46,13 @@ for package in packages:
 
 # TODO 4: 선택 Provider 통합이 설치되어 있는지 find_spec()으로 확인하세요.
 optional_modules = {
-    "langchain_upstage": "Upstage",
-    "langchain_pinecone": "Pinecone",
-    "langchain_ollama": "Ollama",
+    "langchain_upstage": "Upstage (langchain-upstage)",
+    "langchain_pinecone": "Pinecone (langchain-pinecone)",
+    "langsmith": "LangSmith (langsmith)",
+    "langchain_ollama": "Ollama (langchain-ollama)",
 }
 
-print("\n[선택 Provider 통합]")
+print("\n[Provider 통합 패키지]")
 for module, label in optional_modules.items():
     print(label, "TODO")
 
