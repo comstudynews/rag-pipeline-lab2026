@@ -8,10 +8,13 @@
 
 ## 실행
 
-1. `practice/` 또는 `complete/`로 이동합니다.
-2. `.env.example`을 `.env`로 복사합니다.
-3. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
-4. 최초 1회 의존성을 동기화합니다.
+VS Code에서 **File → Open Folder...**를 선택하고 `step04_embedding/practice` 폴더를 엽니다. 완성 코드 확인이 필요할 때만 같은 Step의 `complete` 폴더를 엽니다.
+
+VS Code에서 **Terminal → New Terminal**을 연 뒤 다음 순서로 진행합니다.
+
+1. `.env.example`을 `.env`로 복사합니다.
+2. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
+3. 최초 1회 의존성을 동기화합니다.
 
 ```bash
 uv sync
