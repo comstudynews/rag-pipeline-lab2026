@@ -40,6 +40,24 @@ LangChain 기반 RAG Pipeline을 **00장 → 14장 순서로 누적 학습**하�
 
 ## 3. 빠른 시작
 
+uv가 없다면 먼저 설치합니다.
+
+- 공식 문서: https://docs.astral.sh/uv/getting-started/installation/
+
+macOS / Linux:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Windows PowerShell:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+설치 후 새 터미널에서 `uv --version`으로 확인합니다.
+
 ```bash
 git clone https://github.com/comstudynews/rag-pipeline-lab2026.git
 cd rag-pipeline-lab2026
