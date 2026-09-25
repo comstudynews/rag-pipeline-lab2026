@@ -1,6 +1,6 @@
 # RAG Pipeline Lab 2026
 
-LangChain 기반 RAG Pipeline을 **00장 → 14장 순서로 누적 학습**하는 수업용 저장소입니다.
+LangChain 기반 RAG Pipeline을 **00장 → 14장 순서로 누적 학습**하고, **15장 보충실습과 오류 해결 부록**까지 제공하는 수업용 저장소입니다.
 
 - 교재: [RAG Pipeline 설계 및 구축 — Step by Step Cookbook](https://app.notion.com/p/3de91bd5a9ac81219435d1f41cc050df)
 - Main Path: **OpenAI + FAISS**
@@ -35,6 +35,8 @@ LangChain 기반 RAG Pipeline을 **00장 → 14장 순서로 누적 학습**하�
 | 12 | `step12_langgraph` | State, Node, Edge, Conditional Edge |
 | 13 | `step13_agentic_rag` | Retrieve → Grade → Rewrite → Retry/Fallback |
 | 14 | `final_capstone` | Baseline과 개선 Pipeline 비교 |
+| 15 | `step15_huggingface_colab` | Hugging Face + Chroma + EXAONE 기반 Korean RAG Colab 보충실습 |
+| 부록 | `appendix_troubleshooting` | RAG 실습 오류와 해결 방법 |
 
 ## 3. 빠른 시작
 
@@ -140,6 +142,8 @@ stepXX_topic/
     └── src/
 ```
 
+`step15_huggingface_colab/`은 Colab 보충실습용 Notebook 구조이며, `appendix_troubleshooting/`은 오류 해결 문서입니다.
+
 ## 7. 종합실습
 
 ```bash
@@ -151,7 +155,20 @@ uv run --locked python src/capstone_compare.py
 
 종합실습은 **Baseline → 문제 진단 → 한 가지 개선 → 같은 질문으로 재평가** 순서로 진행합니다. 기술을 많이 넣는 것이 아니라 개선 이유와 전·후 결과를 설명하는 것이 핵심입니다.
 
-## 8. 보안
+## 8. 15장 보충실습과 부록
+
+15장은 누적 Step과 별도로 Google Colab에서 실행하는 선택 실습입니다.
+
+- `step15_huggingface_colab/README.md`: 15장 전체 설명과 코드
+- `step15_huggingface_colab/korean_rag_colab.ipynb`: Colab 실행용 Notebook
+- `step15_huggingface_colab/sample_data.md`: 업로드 테스트용 샘플 문서
+- `appendix_troubleshooting/README.md`: 교재 부록의 오류 해결 가이드
+
+Colab Notebook:
+
+https://colab.research.google.com/github/comstudynews/rag-pipeline-lab2026/blob/main/step15_huggingface_colab/korean_rag_colab.ipynb
+
+## 9. 보안
 
 - 실제 `.env`와 API Key는 Git에 올리지 않습니다.
 - `.env.example`에는 변수명만 둡니다.
