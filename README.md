@@ -73,7 +73,7 @@ uv python install 3.11
 ```bash
 git clone https://github.com/comstudynews/rag-pipeline-lab2026.git
 cd rag-pipeline-lab2026
-cd step00_environment_setup/complete
+cd step00_environment_setup/practice
 cp .env.example .env
 ```
 
@@ -82,6 +82,8 @@ Windows PowerShell:
 ```powershell
 Copy-Item .env.example .env
 ```
+
+`practice/`와 `complete/`는 각각 독립 실행 폴더입니다. 수업은 `practice/`에서 진행하고, 완성 코드 확인이 필요하면 같은 Step의 `complete/`로 이동합니다.
 
 기본 실습은 `OPENAI_API_KEY`가 필요합니다.
 
