@@ -14,4 +14,9 @@ dependencies = [
   "pypdf==6.19.0",
   "python-dotenv==1.2.3",
   "rank-bm25==0.2.2",
+  "langchain-upstage",
+  "langchain-pinecone",
+  "pinecone",
+  "langsmith",
+  "langchain-ollama",
 ]
