@@ -58,6 +58,18 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 
 설치 후 새 터미널에서 `uv --version`으로 확인합니다.
 
+Python 3.11 설치 여부도 확인합니다.
+
+```bash
+uv python list --only-installed 3.11
+```
+
+Python 3.11이 없다면 설치합니다.
+
+```bash
+uv python install 3.11
+```
+
 ```bash
 git clone https://github.com/comstudynews/rag-pipeline-lab2026.git
 cd rag-pipeline-lab2026
