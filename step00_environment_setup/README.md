@@ -113,7 +113,9 @@ warning: Failed to hardlink files; falling back to full copy.
 
 uv 캐시와 프로젝트가 서로 다른 드라이브에 있을 때 나타날 수 있으며, 파일 복사 방식으로 자동 전환됩니다. 설치가 완료되었다면 실습 진행에는 문제가 없습니다.
 
-마지막으로 환경 점검 코드를 실행합니다.
+실제 환경 확인 실습은 교재의 **0.11 환경 확인 프로그램**에서 진행합니다.
+
+`practice/src/00_check_env.py`는 TODO가 포함된 연습용 파일이고, `complete/src/00_check_env.py`는 완성 코드입니다. 연습용 파일의 TODO를 완성한 뒤 실행합니다.
 
 ```bash
 uv run --locked python src/00_check_env.py
