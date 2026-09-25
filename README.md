@@ -40,7 +40,23 @@ LangChain 기반 RAG Pipeline을 **00장 → 14장 순서로 누적 학습**하�
 
 ## 3. 빠른 시작
 
-uv가 없다면 먼저 설치합니다.
+저장소를 내려받습니다.
+
+```bash
+git clone https://github.com/comstudynews/rag-pipeline-lab2026.git
+```
+
+Clone이 끝나면 VS Code에서 **File → Open Folder...**를 선택해 `rag-pipeline-lab2026/step00_environment_setup/practice` 폴더를 엽니다.
+
+이후 명령은 VS Code의 **Terminal → New Terminal**에서 실행합니다.
+
+### uv 확인
+
+```bash
+uv --version
+```
+
+uv가 없다면 공식 설치 가이드를 참고합니다.
 
 - 공식 문서: https://docs.astral.sh/uv/getting-started/installation/
 
@@ -56,9 +72,7 @@ Windows PowerShell:
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-설치 후 새 터미널에서 `uv --version`으로 확인합니다.
-
-Python 3.11 설치 여부도 확인합니다.
+### Python 3.11 확인
 
 ```bash
 uv python list --only-installed 3.11
@@ -70,13 +84,9 @@ Python 3.11이 없다면 설치합니다.
 uv python install 3.11
 ```
 
-```bash
-git clone https://github.com/comstudynews/rag-pipeline-lab2026.git
-```
+### 환경변수와 의존성 준비
 
-Clone이 끝나면 VS Code에서 **File → Open Folder...**를 선택해 `rag-pipeline-lab2026/step00_environment_setup/practice` 폴더를 엽니다.
-
-VS Code에서 **Terminal → New Terminal**을 연 뒤 `.env.example`을 `.env`로 복사합니다.
+`.env.example`을 `.env`로 복사합니다.
 
 macOS / Linux:
 
@@ -89,8 +99,6 @@ Windows PowerShell:
 ```powershell
 Copy-Item .env.example .env
 ```
-
-수업은 각 Step의 `practice/` 폴더를 VS Code에서 직접 열어 진행합니다. 완성 코드 확인이 필요할 때만 같은 Step의 `complete/` 폴더를 엽니다.
 
 기본 실습은 `OPENAI_API_KEY`가 필요합니다.
 
@@ -106,21 +114,19 @@ LANGSMITH_PROJECT=rag-pipeline-lab2026
 # LANGSMITH_ENDPOINT=
 ```
 
-### 최초 1회 의존성 동기화
-
-현재 단계별 폴더에는 `pyproject.toml`의 직접 의존성 버전이 고정되어 있습니다. 처음 실행할 때는 다음 명령으로 환경을 만들고 `uv.lock`을 생성합니다.
+처음 실행할 때는 다음 명령으로 환경을 만들고 `uv.lock`을 생성합니다.
 
 ```bash
 uv sync
 ```
 
-그 다음부터는 잠긴 환경을 기준으로 실행합니다.
+이후에는 잠긴 환경을 기준으로 실행합니다.
 
 ```bash
 uv run --locked python src/00_check_env.py
 ```
 
-> 수업 배포본에서 교수자가 `uv.lock`을 함께 제공하는 경우에는 처음부터 `uv sync --locked`를 사용합니다.
+각 장에서는 VS Code에서 해당 Step의 `practice/` 폴더를 직접 열어 실습합니다. 완성 코드 확인이 필요할 때만 같은 Step의 `complete/` 폴더를 엽니다.
 
 ## 4. 실습 환경
 
