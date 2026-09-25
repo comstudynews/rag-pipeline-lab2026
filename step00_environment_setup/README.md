@@ -32,6 +32,20 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 
 설치 후 터미널을 다시 열고 `uv --version`으로 확인합니다.
 
+## Python 3.11 확인
+
+실습은 Python 3.11을 사용합니다.
+
+```bash
+uv python list --only-installed 3.11
+```
+
+Python 3.11이 표시되면 그대로 진행합니다. 없다면 설치합니다.
+
+```bash
+uv python install 3.11
+```
+
 ## 실행
 
 1. `practice/` 또는 `complete/`로 이동합니다.
