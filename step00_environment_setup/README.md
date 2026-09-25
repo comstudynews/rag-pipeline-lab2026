@@ -46,23 +46,22 @@ Python 3.11이 표시되면 그대로 진행합니다. 없다면 설치합니다
 uv python install 3.11
 ```
 
-## 실행
+## VS Code에서 실습 폴더 열기
 
 `practice/`와 `complete/`는 각각 `pyproject.toml`을 가진 독립 실행 폴더입니다.
 
-수업 실습:
+VS Code에서 **File → Open Folder...**를 선택하고 수업에서는 `step00_environment_setup/practice` 폴더를 엽니다. 완성 코드를 확인할 때만 같은 Step의 `complete` 폴더를 엽니다.
+
+터미널에서 폴더를 연 경우에는 다음과 같이 VS Code를 실행할 수도 있습니다.
 
 ```bash
-cd step00_environment_setup/practice
+cd rag-pipeline-lab2026/step00_environment_setup/practice
+code .
 ```
 
-완성 코드 확인:
+이 방법은 Step 00에서만 안내합니다. 이후 장에서는 VS Code에서 해당 Step의 `practice/` 폴더를 직접 엽니다.
 
-```bash
-cd step00_environment_setup/complete
-```
-
-이후 명령은 선택한 하위 폴더에서 실행합니다.
+VS Code에서 **Terminal → New Terminal**을 연 뒤 명령을 실행합니다.
 
 1. `.env.example`을 `.env`로 복사합니다.
 2. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
