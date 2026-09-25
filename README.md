@@ -114,17 +114,22 @@ LANGSMITH_PROJECT=rag-pipeline-lab2026
 # LANGSMITH_ENDPOINT=
 ```
 
-처음 실행할 때는 다음 명령으로 환경을 만들고 `uv.lock`을 생성합니다.
+처음 실행할 때는 다음 명령으로 환경을 구성합니다.
 
 ```bash
 uv sync
 ```
 
-이후에는 잠긴 환경을 기준으로 실행합니다.
+처음 실행하면 `.venv` 가상환경이 생성되고, 필요한 패키지가 설치되며, 저장소에 `uv.lock`이 없다면 의존성 버전을 기록한 `uv.lock`이 생성됩니다.
+
+환경 구성이 끝나면 잠긴 환경을 기준으로 실행합니다.
 
 ```bash
+uv run --locked python --version
 uv run --locked python src/00_check_env.py
 ```
+
+> `uv sync` 전에 `uv run`을 먼저 실행하면 uv가 필요한 환경을 자동으로 구성하면서 `.venv` 생성과 패키지 설치 로그가 함께 출력될 수 있습니다.
 
 각 장에서는 VS Code에서 해당 Step의 `practice/` 폴더를 직접 열어 실습합니다. 완성 코드 확인이 필요할 때만 같은 Step의 `complete/` 폴더를 엽니다.
 
