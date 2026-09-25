@@ -65,12 +65,13 @@ for package in packages:
     print(f"{package}: {version(package)}")
 
 optional_modules = {
-    "langchain_upstage": "Upstage",
-    "langchain_pinecone": "Pinecone",
-    "langchain_ollama": "Ollama",
+    "langchain_upstage": "Upstage (langchain-upstage)",
+    "langchain_pinecone": "Pinecone (langchain-pinecone)",
+    "langsmith": "LangSmith (langsmith)",
+    "langchain_ollama": "Ollama (langchain-ollama)",
 }
 
-print("\n[선택 Provider 통합]")
+print("\n[Provider 통합 패키지]")
 for module, label in optional_modules.items():
     print(label + ":", "설치됨" if find_spec(module) else "미설치")
 
