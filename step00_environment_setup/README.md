@@ -6,9 +6,22 @@ Python 3.11, uv, API Key, 선택 Provider와 실습환경을 준비합니다.
 - `practice/`: 현재 Step을 직접 완성하는 연습용
 - `complete/`: 교재 기준 완성 코드
 
-## uv 설치
+## VS Code에서 실습 폴더 열기
 
-먼저 uv 설치 여부를 확인합니다.
+VS Code에서 **File → Open Folder...**를 선택하고 수업에서는 `step00_environment_setup/practice` 폴더를 엽니다. 완성 코드를 확인할 때만 같은 Step의 `complete` 폴더를 엽니다.
+
+터미널에서 폴더를 연 경우에는 다음과 같이 VS Code를 실행할 수도 있습니다.
+
+```bash
+cd rag-pipeline-lab2026/step00_environment_setup/practice
+code .
+```
+
+이 방법은 Step 00에서만 안내합니다. 이후 장에서는 VS Code에서 해당 Step의 `practice/` 폴더를 직접 엽니다.
+
+VS Code에서 **Terminal → New Terminal**을 연 뒤 아래 명령을 실행합니다.
+
+## uv 설치 및 확인
 
 ```bash
 uv --version
@@ -30,11 +43,9 @@ Windows PowerShell:
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-설치 후 터미널을 다시 열고 `uv --version`으로 확인합니다.
+설치 후 VS Code 터미널을 다시 열고 `uv --version`으로 확인합니다.
 
 ## Python 3.11 확인
-
-실습은 Python 3.11을 사용합니다.
 
 ```bash
 uv python list --only-installed 3.11
@@ -46,22 +57,7 @@ Python 3.11이 표시되면 그대로 진행합니다. 없다면 설치합니다
 uv python install 3.11
 ```
 
-## VS Code에서 실습 폴더 열기
-
-`practice/`와 `complete/`는 각각 `pyproject.toml`을 가진 독립 실행 폴더입니다.
-
-VS Code에서 **File → Open Folder...**를 선택하고 수업에서는 `step00_environment_setup/practice` 폴더를 엽니다. 완성 코드를 확인할 때만 같은 Step의 `complete` 폴더를 엽니다.
-
-터미널에서 폴더를 연 경우에는 다음과 같이 VS Code를 실행할 수도 있습니다.
-
-```bash
-cd rag-pipeline-lab2026/step00_environment_setup/practice
-code .
-```
-
-이 방법은 Step 00에서만 안내합니다. 이후 장에서는 VS Code에서 해당 Step의 `practice/` 폴더를 직접 엽니다.
-
-VS Code에서 **Terminal → New Terminal**을 연 뒤 명령을 실행합니다.
+## 실행
 
 1. `.env.example`을 `.env`로 복사합니다.
 2. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
@@ -76,8 +72,6 @@ uv sync
 ```bash
 uv run --locked python src/00_check_env.py
 ```
-
-
 
 ## 확인 원칙
 
