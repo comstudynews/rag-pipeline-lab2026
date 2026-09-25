@@ -1,62 +1,59 @@
 # Step 00. 개발환경·API Key 준비
 
-Python 3.11, uv, API Key, 핵심 패키지, Provider 통합 패키지와 Ollama Runtime을 미리 점검합니다.
+Step 00은 RAG 기능을 구현하는 장이 아니라 **이후 실습을 시작하기 전에 현재 PC와 개발환경이 준비되었는지 확인하는 사전 점검(Preflight Check)** 단계입니다.
 
-Step 00은 RAG 기능 구현이 아니라 **사전 환경 점검(Preflight Check)** 단계입니다. 수업 중간에 설치·인증 문제로 흐름이 끊기지 않도록 이후 실습에 필요한 환경을 먼저 준비하고 확인합니다.
+수업 중간에 Python 버전, 패키지 설치, API Key, Ollama 실행 문제로 흐름이 끊기지 않도록 필요한 환경을 먼저 준비하고 확인합니다.
 
-완료 기준:
-- Python 3.11과 uv가 정상 동작
-- `.env`의 필요한 환경변수를 읽을 수 있음
-- 핵심 패키지 설치 및 버전 확인
-- Upstage, Pinecone, LangSmith, Ollama 통합 패키지 설치 확인
-- Ollama를 사용할 경우 Runtime과 Model 준비
-- `src/00_check_env.py` 실행 후 `핵심 환경 확인: OK`
-
-> `OK`는 현재 PC의 설치·환경변수·패키지 상태가 준비되었다는 뜻입니다. API Key의 실제 유효성, Credit·Quota, Provider 응답은 해당 기능을 사용하는 Step에서 다시 확인합니다.
-
-- 교재: [해당 장 바로가기](https://app.notion.com/p/3de91bd5a9ac8171bf44dd42fb7ad357)
-- `practice/`: 현재 Step을 직접 완성하는 연습용
+- 교재: [00. 개발환경·API Key 준비 | LangChain RAG 실습환경 만들기](https://app.notion.com/p/3de91bd5a9ac8171bf44dd42fb7ad357)
+- `practice/`: 수강생이 TODO를 직접 완성하는 연습용
 - `complete/`: 교재 기준 완성 코드
 
-## VS Code에서 실습 폴더 열기
+## Step 00에서 확인하는 것
 
-VS Code에서 **File → Open Folder...**를 선택하고 수업에서는 `step00_environment_setup/practice` 폴더를 엽니다. 완성 코드를 확인할 때만 같은 Step의 `complete` 폴더를 엽니다.
+| 확인 항목 | 확인 내용 |
+| --- | --- |
+| Git / VS Code | 저장소 Clone, 실습 폴더 열기, 터미널 실행 |
+| Python 3.11 | 실제 실행 중인 Python 버전 |
+| uv / `.venv` | 가상환경 생성과 의존성 설치 |
+| `.env` / API Key | OpenAI, Upstage, Pinecone, LangSmith 환경변수 로드 |
+| 핵심 패키지 | LangChain, LangGraph, FAISS, PyPDF, BM25 등 설치 버전 |
+| Provider 통합 패키지 | Upstage, Pinecone, LangSmith, Ollama 패키지 설치 여부 |
+| Ollama Runtime / Model | Ollama 프로그램과 Local Model 준비 여부 |
 
-터미널에서 폴더를 연 경우에는 다음과 같이 VS Code를 실행할 수도 있습니다.
+> `00_check_env.py`의 `핵심 환경 확인: OK`는 현재 PC의 Python 환경, 환경변수 로드, 패키지 설치 상태가 정상이라는 뜻입니다. API Key의 실제 유효성, Credit·Quota, Provider 응답 성공까지 보장하는 것은 아닙니다.
+
+## 1. 저장소와 실습 폴더 준비
+
+저장소를 내려받습니다.
+
+```bash
+git clone https://github.com/comstudynews/rag-pipeline-lab2026.git
+```
+
+VS Code에서 **File → Open Folder...**를 선택하고 다음 폴더를 엽니다.
+
+```text
+rag-pipeline-lab2026/step00_environment_setup/practice
+```
+
+수업은 `practice/`에서 진행하고, 완성 코드 확인이나 오류 비교가 필요할 때만 `complete/`를 사용합니다.
+
+터미널에서 열 경우 Step 00에서만 다음 방법을 사용할 수 있습니다.
 
 ```bash
 cd rag-pipeline-lab2026/step00_environment_setup/practice
 code .
 ```
 
-이 방법은 Step 00에서만 안내합니다. 이후 장에서는 VS Code에서 해당 Step의 `practice/` 폴더를 직접 엽니다.
+## 2. uv와 Python 3.11 준비
 
-VS Code에서 **Terminal → New Terminal**을 연 뒤 아래 명령을 실행합니다.
-
-## uv와 venv의 차이
-
-`venv`는 프로젝트마다 독립된 가상환경을 만드는 Python 표준 도구입니다. 패키지 설치와 버전 관리는 보통 `pip` 등으로 별도 처리합니다.
-
-`uv`는 가상환경뿐 아니라 **Python 버전, 패키지 설치, 의존성 잠금, 실행**까지 함께 관리합니다.
-
-이 과정에서는 LangChain, LangGraph, FAISS 등 여러 패키지를 함께 사용하므로 수강생마다 같은 환경을 쉽게 구성하고 버전 차이를 줄이기 위해 uv를 사용합니다.
-
-주요 명령:
-
-- Python 준비: `uv python install`
-- 의존성 동기화: `uv sync`
-- 패키지 추가: `uv add`
-- 실행: `uv run --locked python ...`
-
-## uv 설치 및 확인
+uv 설치 여부를 확인합니다.
 
 ```bash
 uv --version
 ```
 
-설치되어 있지 않다면 공식 설치 가이드를 참고합니다.
-
-- 공식 문서: https://docs.astral.sh/uv/getting-started/installation/
+설치되어 있지 않다면:
 
 macOS / Linux:
 
@@ -70,40 +67,52 @@ Windows PowerShell:
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-설치 후 VS Code 터미널을 다시 열고 `uv --version`으로 확인합니다.
-
-## Python 3.11 확인
+Python 3.11 설치 여부를 확인합니다.
 
 ```bash
 uv python list --only-installed 3.11
 ```
 
-Python 3.11이 표시되면 그대로 진행합니다. 없다면 설치합니다.
+없으면 설치합니다.
 
 ```bash
 uv python install 3.11
 ```
 
-## 가상환경과 의존성 구성
+## 3. 가상환경과 의존성 구성
 
-`.env.example`을 `.env`로 복사하고 기본 실습에서는 `OPENAI_API_KEY`를 설정합니다.
+Step 00의 `pyproject.toml`에는 핵심 RAG 패키지와 Provider 통합 패키지가 함께 등록되어 있습니다.
 
-처음에는 다음 명령을 실행합니다.
+핵심 패키지:
+
+- `langchain`
+- `langchain-openai`
+- `langchain-community`
+- `langchain-classic`
+- `langchain-text-splitters`
+- `langgraph`
+- `faiss-cpu`
+- `pypdf`
+- `python-dotenv`
+- `rank-bm25`
+
+Provider 통합 패키지:
+
+- `langchain-upstage`
+- `langchain-pinecone`
+- `pinecone`
+- `langsmith`
+- `langchain-ollama`
+
+따라서 Step 00에서는 별도의 `uv add` 없이 다음 명령으로 모두 설치합니다.
 
 ```bash
 uv sync
 ```
 
-처음 실행하면 uv가 `pyproject.toml`을 기준으로 다음 작업을 수행합니다.
+처음 실행하면 현재 폴더에 `.venv`가 만들어지고 `uv.lock`이 생성됩니다.
 
-1. 사용할 Python 버전 확인
-2. 현재 폴더에 `.venv` 생성
-3. 필요한 패키지 설치
-4. 의존성 버전을 `uv.lock`에 기록
-
-`.venv`는 실제 패키지가 설치되는 가상환경이고, `uv.lock`은 같은 의존성 버전을 다시 설치할 수 있도록 기록한 파일입니다.
-
-환경 구성이 끝나면 Python 버전을 확인합니다.
+Python 버전을 확인합니다.
 
 ```bash
 uv run --locked python --version
@@ -115,63 +124,140 @@ uv run --locked python --version
 Python 3.11.x
 ```
 
-> `uv sync` 전에 `uv run python --version`을 먼저 실행하면 uv가 필요한 환경을 자동으로 구성할 수 있습니다. 이 경우 `.venv` 생성과 패키지 설치 로그가 함께 출력될 수 있습니다. 교재에서는 흐름을 명확히 하기 위해 `uv sync`를 먼저 실행합니다.
-
-Windows에서 다음 경고가 표시될 수 있습니다.
+Windows에서 다음 경고가 나와도 설치가 완료되었다면 진행할 수 있습니다.
 
 ```text
 warning: Failed to hardlink files; falling back to full copy.
 ```
 
-uv 캐시와 프로젝트가 서로 다른 드라이브에 있을 때 나타날 수 있으며, 파일 복사 방식으로 자동 전환됩니다. 설치가 완료되었다면 실습 진행에는 문제가 없습니다.
+## 4. .env와 API Key 준비
 
-실제 환경 확인 실습은 교재의 **0.11 환경 확인 프로그램**에서 진행합니다.
+`.env.example`을 `.env`로 복사합니다.
 
-`practice/src/00_check_env.py`는 TODO가 포함된 연습용 파일이고, `complete/src/00_check_env.py`는 완성 코드입니다. 연습용 파일의 TODO를 완성한 뒤 실행합니다.
-
-```bash
-uv run --locked python src/00_check_env.py
-```
-
-## Provider 통합 패키지 사전 점검
-
-Step 00에서는 뒤의 장에서 사용할 가능성이 있는 통합 패키지까지 미리 설치해 설치 가능 여부를 확인합니다.
+macOS / Linux:
 
 ```bash
-uv add langchain-upstage
-uv add langchain-pinecone pinecone
-uv add langsmith
-uv add langchain-ollama
+cp .env.example .env
 ```
 
-설치 후 다시 실행합니다.
+Windows PowerShell:
 
-```bash
-uv run --locked python src/00_check_env.py
+```powershell
+Copy-Item .env.example .env
 ```
 
-예상 확인 항목:
+현재 `.env.example`:
 
 ```text
-[선택 Provider 통합]
-Upstage: 설치됨
-Pinecone: 설치됨
-Ollama: 설치됨
-
-핵심 환경 확인: OK
+OPENAI_API_KEY=
+UPSTAGE_API_KEY=
+PINECONE_API_KEY=
+LANGSMITH_TRACING=false
+LANGSMITH_API_KEY=
+LANGSMITH_PROJECT=rag-pipeline-lab2026
+# LANGSMITH_ENDPOINT=
 ```
 
-Ollama는 Python 패키지와 별도로 Runtime과 Model도 확인합니다.
+기본 RAG 실습에는 `OPENAI_API_KEY`가 필요합니다. Upstage, Pinecone, LangSmith는 해당 기능을 사용할 때 사용합니다.
+
+실제 Key가 들어 있는 `.env`는 GitHub에 올리지 않습니다.
+
+## 5. Ollama 선택 환경 준비
+
+Ollama를 사용할 경우 Runtime과 실습용 Model을 미리 준비합니다.
+
+설치 확인:
 
 ```bash
 ollama --version
 ollama list
 ```
 
-각 Step은 별도의 `practice/` 환경을 사용하므로 이후 장에서는 해당 Step 폴더에서 `uv sync`로 다시 환경을 구성합니다. Step 00의 목적은 모든 패키지를 한 환경에서 계속 쓰는 것이 아니라, **현재 PC에서 이후 실습 도구를 설치하고 사용할 준비가 되는지 미리 검증하는 것**입니다.
+실습용 Chat Model:
 
-## 확인 원칙
+```bash
+ollama pull qwen3:4b
+```
 
-최종 출력만 보지 말고 **Python 버전 → 환경변수 → 핵심 패키지 → Provider 통합 → Runtime** 순서로 확인합니다.
+실습용 Embedding Model:
 
-> 교재의 설명과 코드 순서를 기준으로 진행하고, `complete/`는 복습·오류 비교용으로 사용합니다.
+```bash
+ollama pull embeddinggemma
+```
+
+필요한 경우 Local Server를 직접 시작합니다.
+
+```bash
+ollama serve
+```
+
+기본 Local API 주소는 `http://localhost:11434`입니다.
+
+## 6. 환경 확인 프로그램
+
+`practice/src/00_check_env.py`는 TODO가 포함된 연습용 파일입니다.
+
+확인하는 항목:
+
+1. Python 버전
+2. `.env` 환경변수 설정 여부
+3. 핵심 패키지 설치 버전
+4. Provider 통합 패키지 설치 여부
+
+TODO를 완성한 뒤 실행합니다.
+
+```bash
+uv run --locked python src/00_check_env.py
+```
+
+정상적인 최종 확인 예:
+
+```text
+Python: 3.11.x
+
+[환경변수]
+OPENAI_API_KEY: 설정됨 (필수)
+UPSTAGE_API_KEY: 설정됨 (선택)
+PINECONE_API_KEY: 설정됨 (선택)
+LANGSMITH_API_KEY: 설정됨 (선택)
+LANGSMITH_TRACING: 설정됨 (선택)
+LANGSMITH_PROJECT: 설정됨 (선택)
+
+[핵심 패키지]
+langchain: 1.4.2
+langchain-openai: 1.6.3
+langchain-community: 0.4.2
+langchain-classic: 1.0.8
+langchain-text-splitters: 1.1.2
+langgraph: 1.2.11
+faiss-cpu: 1.15.1
+pypdf: 6.19.0
+python-dotenv: 1.2.3
+rank-bm25: 0.2.2
+
+[Provider 통합 패키지]
+Upstage (langchain-upstage): 설치됨
+Pinecone (langchain-pinecone): 설치됨
+LangSmith (langsmith): 설치됨
+Ollama (langchain-ollama): 설치됨
+
+핵심 환경 확인: OK
+```
+
+환경에 따라 `langchain-community` import 시 DeprecationWarning이 표시될 수 있습니다. 패키지 버전이 출력되고 마지막까지 실행되어 `핵심 환경 확인: OK`가 나오면 Step 00 점검 자체는 완료된 것입니다.
+
+## Step 00 완료 기준
+
+다음을 모두 확인한 뒤 Step 01로 진행합니다.
+
+- Python 3.11 사용
+- `uv --version` 정상
+- `uv sync` 성공
+- `.env` 생성 및 필요한 API Key 설정
+- 핵심 패키지 설치 및 버전 출력
+- Upstage, Pinecone, LangSmith, Ollama 통합 패키지 설치 확인
+- Ollama 사용 시 Runtime과 Model 확인
+- `uv run --locked python src/00_check_env.py` 실행 성공
+- 마지막에 `핵심 환경 확인: OK` 출력
+
+각 Step은 별도의 `practice/` 환경을 사용합니다. Step 00에서 확인한 `.venv`를 모든 장이 공유하는 구조가 아니므로 이후 장에서는 해당 Step 폴더에서 `uv sync`로 다시 환경을 구성합니다.
