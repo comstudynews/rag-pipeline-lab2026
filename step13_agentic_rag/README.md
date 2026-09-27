@@ -26,6 +26,20 @@ uv sync
 uv run --locked python src/13_agentic_rag.py
 ```
 
+## 실습 순서
+
+Step 13은 누적형 폴더입니다. Step 00~12의 코드는 완성 상태로 제공되며, `practice/src/13_agentic_rag.py`의 TODO 1~7을 교재 순서대로 완성합니다.
+
+1. Retrieve Node
+2. Grade Node
+3. Rewrite Node
+4. Generate Node
+5. Fallback Node
+6. Grade 결과에 따른 분기 함수
+7. Conditional Edge, Rewrite Loop, 종료 Edge 구성
+
+특히 `rewrite → retrieve` Loop를 만들 때 `retry_count` 기반 종료 조건을 함께 확인합니다.
+
 ## 확인 원칙
 
 최종 출력만 보지 말고 **입력 → 현재 단계의 처리 → 출력**을 확인합니다. 검색이 포함된 Step에서는 LLM 답변보다 검색된 Document를 먼저 확인합니다.
