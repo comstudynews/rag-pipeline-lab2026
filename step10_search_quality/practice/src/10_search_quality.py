@@ -1,8 +1,16 @@
 from dotenv import load_dotenv
+from langchain_classic.retrievers.ensemble import EnsembleRetriever
+from langchain_classic.retrievers.multi_query import MultiQueryRetriever
+from langchain_classic.retrievers.parent_document_retriever import ParentDocumentRetriever
+from langchain_community.document_loaders import TextLoader
+from langchain_community.document_transformers import LongContextReorder
 from langchain_community.retrievers import BM25Retriever
+from langchain_community.storage import InMemoryStore
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
+from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 load_dotenv()
 
@@ -24,7 +32,9 @@ llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 # TODO 2 (10.6): BM25로 DEMO-2026-R7을 검색하세요.
 # TODO 3 (10.7): Dense와 BM25 결과를 unique_merge()로 합쳐 Hybrid 후보를 만드세요.
 # TODO 4 (10.8~10.9): LLM 관련성 점수(0~100)로 후보를 Rerank하세요.
-# TODO 5 (10.13~10.16): ParentDocumentRetriever, MultiQueryRetriever,
-#         EnsembleRetriever, LongContextReorder를 선택 실습으로 추가하세요.
+# TODO 5 (10.13): ParentDocumentRetriever로 작은 Chunk를 검색하고 큰 문맥을 반환하세요.
+# TODO 6 (10.14): MultiQueryRetriever로 여러 검색 질의를 생성해 결과를 비교하세요.
+# TODO 7 (10.15): EnsembleRetriever로 Dense와 BM25 결과를 결합하세요.
+# TODO 8 (10.16): LongContextReorder로 긴 Context의 문서 순서를 재배치하세요.
 
 print("TODO: Step 10 검색 품질 고도화를 완성하세요.")
