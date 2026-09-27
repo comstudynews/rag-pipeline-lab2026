@@ -7,6 +7,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 load_dotenv()
 
+# PREPROCESSING
+# 1) 문서를 읽고 Chunk로 나눕니다.
 loader = TextLoader("data/sample.txt", encoding="utf-8")
 docs = loader.load()
 
@@ -16,13 +18,17 @@ splitter = RecursiveCharacterTextSplitter(
 )
 chunks = splitter.split_documents(docs)
 
+# 2) Chunk를 Embedding하여 검색 가능한 Vector Store를 만듭니다.
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 vectorstore = FAISS.from_documents(chunks, embeddings)
 retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
 
+# RUNTIME
+# 3) 사용자 질문으로 관련 문서를 먼저 검색합니다.
 question = "대출한 책을 연장할 수 있나요?"
 retrieved_docs = retriever.invoke(question)
 
+# 4) 검색된 Document를 Prompt에 넣을 하나의 Context 문자열로 합칩니다.
 context = "\n\n".join(
     f"[문서 {i}]\n{doc.page_content}"
     for i, doc in enumerate(retrieved_docs, start=1)
@@ -49,10 +55,13 @@ llm = ChatOpenAI(
     temperature=0,
 )
 
+# 5) Prompt에 검색 Context와 질문을 채웁니다.
 messages = prompt.invoke({
     "context": context,
     "question": question,
 })
+
+# 6) LLM이 검색된 근거를 사용해 최종 답변을 생성합니다.
 response = llm.invoke(messages)
 
 print("[검색 문서]")
