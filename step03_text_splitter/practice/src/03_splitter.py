@@ -6,13 +6,13 @@ docs = loader.load()
 
 chunk_size = 120
 
-# TODO 1: chunk_overlap을 교재의 기본값인 20으로 수정하세요.
-chunk_overlap = 0
+# TODO 1: 기본 실습에서는 chunk_overlap을 20으로 설정하세요.
+chunk_overlap = None
 
-# TODO 2: add_start_index를 True로 수정해 Chunk 시작 위치를 metadata에 남기세요.
-add_start_index = False
+# TODO 2: add_start_index를 True로 설정해 Chunk 시작 위치를 metadata에 남기세요.
+add_start_index = None
 
-if chunk_overlap != 20 or not add_start_index:
+if chunk_overlap is None or add_start_index is None:
     raise SystemExit("TODO 1~2를 모두 완성한 뒤 실행하세요.")
 
 text_splitter = RecursiveCharacterTextSplitter(
