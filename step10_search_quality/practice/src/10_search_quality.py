@@ -1,3 +1,5 @@
+import re
+
 from dotenv import load_dotenv
 from langchain_classic.retrievers.ensemble import EnsembleRetriever
 from langchain_classic.retrievers.multi_query import MultiQueryRetriever
@@ -5,7 +7,7 @@ from langchain_classic.retrievers.parent_document_retriever import ParentDocumen
 from langchain_community.document_loaders import TextLoader
 from langchain_community.document_transformers import LongContextReorder
 from langchain_community.retrievers import BM25Retriever
-from langchain_community.storage import InMemoryStore
+from langchain_core.stores import InMemoryStore
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from langchain_core.vectorstores import InMemoryVectorStore
