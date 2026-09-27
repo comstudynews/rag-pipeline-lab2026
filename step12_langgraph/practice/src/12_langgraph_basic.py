@@ -10,12 +10,12 @@ class GraphState(TypedDict):
 
 
 def normalize_question(state: GraphState):
-    # TODO 1: question의 앞뒤 공백을 제거해 normalized_question을 반환하세요.
+    # TODO 1 (12.6~12.7): question의 앞뒤 공백을 제거해 normalized_question을 반환하세요.
     raise NotImplementedError
 
 
 def count_length(state: GraphState):
-    # TODO 2: normalized_question의 길이를 계산해 length를 반환하세요.
+    # TODO 2 (12.6~12.7): normalized_question의 길이를 계산해 length를 반환하세요.
     raise NotImplementedError
 
 
@@ -30,12 +30,12 @@ def long_question(state: GraphState):
 
 
 def route_by_length(state: GraphState):
-    # TODO 3: length <= 20이면 short, 아니면 long을 반환하세요.
+    # TODO 3 (12.9): length <= 20이면 short, 아니면 long을 반환하세요.
     raise NotImplementedError
 
 
-# TODO 4: StateGraph에 Node와 Edge를 등록하세요.
-# TODO 5: count_length 뒤에 Conditional Edge를 연결하세요.
-# TODO 6: short / long을 END에 연결하고 compile/invoke하세요.
+# TODO 4 (12.4~12.8): StateGraph에 Node와 Edge를 등록하세요.
+# TODO 5 (12.9): count_length 뒤에 Conditional Edge를 연결하세요.
+# TODO 6 (12.9): short / long을 END에 연결하고 compile/invoke하세요.
 
 print("TODO: Step 12 LangGraph를 완성하세요.")
