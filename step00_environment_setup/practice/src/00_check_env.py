@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# TODO 1: Python 버전을 출력하세요.
+# TODO 1: Python 버전 확인 코드는 제공되어 있습니다. 실행 결과가 3.11인지 확인하세요.
 print("Python:", sys.version.split()[0])
 
 # TODO 2: 필수/선택 환경변수의 설정 여부를 출력하세요.
@@ -22,7 +22,7 @@ env_vars = [
 
 print("\n[환경변수]")
 for name, required in env_vars:
-    # TODO: 설정됨/없음과 필수/선택을 출력하세요.
+    # TODO: os.getenv()로 값을 확인하고 설정됨/없음과 필수/선택을 출력하세요.
     print(name, "TODO", "(필수)" if required else "(선택)")
 
 # TODO 3: 핵심 패키지를 import하고 설치 버전을 출력하세요.
