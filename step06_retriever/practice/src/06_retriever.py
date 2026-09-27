@@ -21,17 +21,15 @@ chunks = splitter.split_documents(docs)
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 vectorstore = FAISS.from_documents(chunks, embeddings)
 
-# TODO: k=3인 Retriever를 만드세요.
+# TODO 4: Vector Store를 k=3인 Retriever로 변환하세요.
 retriever = None
 
 if retriever is None:
-    raise SystemExit("TODO: vectorstore.as_retriever(...)를 완성하세요.")
+    raise SystemExit("TODO 4: vectorstore.as_retriever(...)를 완성하세요.")
 
 # 5) 질문을 넣고 실제 검색 결과를 확인합니다.
 question = "토요일에는 몇 시까지 운영하나요?"
 results = retriever.invoke(question)
 
 for i, doc in enumerate(results, start=1):
-    print(f"\n[{i}]")
-    print(doc.page_content)
-    print("metadata:", doc.metadata)
+    print(f"\n[{i}] {doc.page_content}")
