@@ -81,9 +81,7 @@ uv python install 3.11
 
 ## 3. 가상환경과 의존성 구성
 
-Step 00의 `pyproject.toml`에는 핵심 RAG 패키지와 Provider 통합 패키지가 함께 등록되어 있습니다.
-
-핵심 패키지:
+Step 00의 `pyproject.toml`에는 **Main Path에 필요한 핵심 RAG 패키지**가 등록되어 있습니다.
 
 - `langchain`
 - `langchain-openai`
@@ -96,21 +94,23 @@ Step 00의 `pyproject.toml`에는 핵심 RAG 패키지와 Provider 통합 패키
 - `python-dotenv`
 - `rank-bm25`
 
-Provider 통합 패키지:
-
-- `langchain-upstage`
-- `langchain-pinecone`
-- `pinecone`
-- `langsmith`
-- `langchain-ollama`
-
-따라서 Step 00에서는 별도의 `uv add` 없이 다음 명령으로 모두 설치합니다.
+먼저 다음 명령으로 기본 환경을 구성합니다.
 
 ```bash
 uv sync
 ```
 
 처음 실행하면 현재 폴더에 `.venv`가 만들어지고 `uv.lock`이 생성됩니다.
+
+Upstage, Pinecone, Ollama 등은 해당 선택 실습을 진행할 때만 추가합니다.
+
+```bash
+uv add langchain-upstage
+uv add langchain-pinecone pinecone
+uv add langchain-ollama
+```
+
+LangSmith는 LangChain 의존성으로 함께 설치될 수 있으며, 별도 기능을 명시적으로 사용할 때 버전을 고정해 추가할 수 있습니다.
 
 Python 버전을 확인합니다.
 
@@ -236,10 +236,10 @@ python-dotenv: 1.2.3
 rank-bm25: 0.2.2
 
 [Provider 통합 패키지]
-Upstage (langchain-upstage): 설치됨
-Pinecone (langchain-pinecone): 설치됨
-LangSmith (langsmith): 설치됨
-Ollama (langchain-ollama): 설치됨
+Upstage (langchain-upstage): 설치됨 또는 미설치
+Pinecone (langchain-pinecone): 설치됨 또는 미설치
+LangSmith (langsmith): 설치됨 또는 미설치
+Ollama (langchain-ollama): 설치됨 또는 미설치
 
 핵심 환경 확인: OK
 ```
@@ -255,7 +255,7 @@ Ollama (langchain-ollama): 설치됨
 - `uv sync` 성공
 - `.env` 생성 및 필요한 API Key 설정
 - 핵심 패키지 설치 및 버전 출력
-- Upstage, Pinecone, LangSmith, Ollama 통합 패키지 설치 확인
+- 사용할 선택 Provider의 통합 패키지 상태 확인
 - Ollama 사용 시 Runtime과 Model 확인
 - `uv run --locked python src/00_check_env.py` 실행 성공
 - 마지막에 `핵심 환경 확인: OK` 출력
