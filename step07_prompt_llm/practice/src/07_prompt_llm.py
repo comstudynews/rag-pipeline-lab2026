@@ -26,7 +26,19 @@ context = ""
 # TODO 2: 제공된 문서에 있는 정보만 사용하도록 ChatPromptTemplate을 작성하세요.
 prompt = None
 
-# TODO 3: ChatOpenAI(model="gpt-4o-mini", temperature=0)를 만들고 호출하세요.
+# TODO 3: ChatOpenAI(model="gpt-4o-mini", temperature=0)를 만드세요.
 llm = None
 
-print("TODO: 검색 Context와 최종 답변을 출력하도록 완성하세요.")
+if prompt is None or llm is None or not context:
+    raise SystemExit("TODO 1~3을 모두 완성한 뒤 실행하세요.")
+
+messages = prompt.invoke({
+    "context": context,
+    "question": question,
+})
+response = llm.invoke(messages)
+
+print("[검색 문서]")
+print(context)
+print("\n[최종 답변]")
+print(response.content)
