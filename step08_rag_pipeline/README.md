@@ -26,6 +26,14 @@ uv sync
 uv run --locked python src/08_rag_pipeline.py
 ```
 
+## 실습 순서
+
+Step 08은 누적형 폴더입니다. Step 00~07의 코드는 완성 상태로 제공되며, 이번 Step에서는 두 파일을 완성합니다.
+
+1. `rag_core.py`: Loader → Splitter → Embedding → FAISS → Retriever → Context 변환 함수 구성
+2. `08_rag_pipeline.py`: Prompt → Chat Model → LCEL Chain 연결
+3. `chain.invoke(question)`으로 전체 RAG Pipeline 실행
+
 ## 확인 원칙
 
 최종 출력만 보지 말고 **입력 → 현재 단계의 처리 → 출력**을 확인합니다. 검색이 포함된 Step에서는 LLM 답변보다 검색된 Document를 먼저 확인합니다.
