@@ -26,6 +26,19 @@ uv sync
 uv run --locked python src/11_advanced_rag.py
 ```
 
+## 실습 순서
+
+Step 11은 누적형 폴더입니다. Step 00~10의 코드는 완성 상태로 제공되며, `practice/src/11_advanced_rag.py`를 교재 절 순서대로 완성합니다.
+
+1. **11.4** Query Rewrite
+2. **11.5** Query Expansion
+3. **11.6** Query Decomposition
+4. **11.8** Query Routing
+5. **11.12** RAG 모듈 분리
+6. **11.13** Retrieval Module 교체 비교
+
+생성되는 Query 문장은 매 실행마다 달라질 수 있으므로 문자열 자체보다 **질문 의도가 유지되는지와 검색 결과가 어떻게 달라지는지**를 확인합니다.
+
 ## 확인 원칙
 
 최종 출력만 보지 말고 **입력 → 현재 단계의 처리 → 출력**을 확인합니다. 검색이 포함된 Step에서는 LLM 답변보다 검색된 Document를 먼저 확인합니다.
