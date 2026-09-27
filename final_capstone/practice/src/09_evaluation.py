@@ -8,8 +8,14 @@ from rag_core import build_retriever, format_docs
 
 load_dotenv()
 
-retriever = build_retriever(file_path="data/sample.txt", k=3)
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+retriever = build_retriever(
+    file_path="data/sample.txt",
+    k=3,
+)
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0,
+)
 
 test_cases = [
     {
@@ -28,14 +34,12 @@ test_cases = [
 
 
 def hit_at_k(question: str, expected_keyword: str) -> int:
-    # Top-K 전체에 정답 키워드가 하나라도 들어 있는지 확인합니다.
     docs = retriever.invoke(question)
     joined = "\n".join(doc.page_content for doc in docs)
     return 1 if expected_keyword in joined else 0
 
 
 def reciprocal_rank(question: str, expected_keyword: str) -> float:
-    # 정답 키워드가 처음 등장한 검색 순위의 역수를 반환합니다.
     docs = retriever.invoke(question)
     for rank, doc in enumerate(docs, start=1):
         if expected_keyword in doc.page_content:
@@ -57,21 +61,25 @@ answer_prompt = ChatPromptTemplate.from_template("""
 
 def generate_answer(question: str, docs) -> str:
     context = format_docs(docs)
-    messages = answer_prompt.invoke({"context": context, "question": question})
+    messages = answer_prompt.invoke({
+        "context": context,
+        "question": question,
+    })
     return llm.invoke(messages).content
 
 
 def judge_groundedness(question: str, context: str, answer: str) -> int:
-    # LLM에게 답변이 Context에 얼마나 충실한지 1~5점으로 평가하게 합니다.
     prompt = f"""
+당신은 RAG 답변 평가자입니다.
 아래 답변이 제공된 문서에 얼마나 충실하게 근거하는지 1~5점으로 평가하세요.
-숫자 하나만 출력하세요.
 
-5점: 핵심 내용이 모두 문서에 명확히 근거함
-4점: 거의 모두 근거함
-3점: 일부 근거하지만 추가 해석이 섞임
-2점: 근거가 부족함
+5점: 답변의 핵심 내용이 모두 문서에 명확히 근거함
+4점: 거의 모두 근거하며 사소한 표현 차이만 있음
+3점: 일부 근거하지만 해석이나 추가 내용이 섞임
+2점: 근거가 부족하고 추측이 많음
 1점: 문서와 무관하거나 모순됨
+
+숫자 하나만 출력하세요.
 
 [질문]
 {question}
@@ -96,18 +104,20 @@ for case in test_cases:
     rr = reciprocal_rank(case["question"], case["expected_keyword"])
     hits.append(hit)
     rr_scores.append(rr)
-    print(case["question"], "HIT" if hit else "MISS", "RR =", round(rr, 3))
+    print(case["question"], "→", "HIT" if hit else "MISS", "RR =", round(rr, 3))
 
 print("Hit Rate:", round(sum(hits) / len(hits), 3))
 print("MRR:", round(sum(rr_scores) / len(rr_scores), 3))
 
 print("\n=== Generation 평가 ===")
 for case in test_cases:
-    docs = retriever.invoke(case["question"])
+    question = case["question"]
+    docs = retriever.invoke(question)
     context = format_docs(docs)
-    answer = generate_answer(case["question"], docs)
-    score = judge_groundedness(case["question"], context, answer)
+    answer = generate_answer(question, docs)
+    score = judge_groundedness(question, context, answer)
 
-    print("\n질문:", case["question"])
+    print("\n============================")
+    print("질문:", question)
     print("답변:", answer)
     print("Groundedness:", score, "/ 5")

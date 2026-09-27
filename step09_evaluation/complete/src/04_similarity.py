@@ -1,5 +1,4 @@
 import math
-
 from dotenv import load_dotenv
 from langchain_openai import OpenAIEmbeddings
 
@@ -8,16 +7,15 @@ embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 
 
 def cosine_similarity(a, b):
-    # 두 벡터의 내적을 계산합니다.
+    # 두 벡터가 같은 방향을 향하는 정도를 계산합니다.
     dot = sum(x * y for x, y in zip(a, b))
 
     # 각 벡터의 길이를 계산합니다.
     norm_a = math.sqrt(sum(x * x for x in a))
     norm_b = math.sqrt(sum(y * y for y in b))
 
-    # 방향이 비슷할수록 1에 가까운 값이 나옵니다.
+    # 내적을 두 벡터 길이의 곱으로 나누면 Cosine Similarity가 됩니다.
     return dot / (norm_a * norm_b)
-
 
 sentences = [
     "도서는 최대 5권까지 대출할 수 있다.",

@@ -8,11 +8,13 @@ from rag_core import build_retriever, format_docs
 
 load_dotenv()
 
+# 1. Retriever 준비
 retriever = build_retriever(
     file_path="data/sample.txt",
     k=3,
 )
 
+# 2. 검색된 문서를 근거로 답하도록 Prompt 구성
 prompt = ChatPromptTemplate.from_template("""
 당신은 제공된 문서를 근거로 답하는 질문-답변 도우미입니다.
 
@@ -31,11 +33,13 @@ prompt = ChatPromptTemplate.from_template("""
 [답변]
 """)
 
+# 3. LLM 준비
 llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0,
 )
 
+# 4. RAG Chain 구성
 chain = (
     {
         "context": retriever | format_docs,
@@ -46,6 +50,7 @@ chain = (
     | StrOutputParser()
 )
 
+# 5. 질문 실행
 question = "도서관에서 노트북은 어디에서 사용할 수 있나요?"
 answer = chain.invoke(question)
 

@@ -1,14 +1,16 @@
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-docs = TextLoader("data/sample.txt", encoding="utf-8").load()
+loader = TextLoader("data/sample.txt", encoding="utf-8")
+docs = loader.load()
 
-splitter = RecursiveCharacterTextSplitter(
+text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=120,
     chunk_overlap=20,
     add_start_index=True,
 )
-chunks = splitter.split_documents(docs)
+
+chunks = text_splitter.split_documents(docs)
 
 print("원본 Document 수:", len(docs))
 print("Chunk 수:", len(chunks))

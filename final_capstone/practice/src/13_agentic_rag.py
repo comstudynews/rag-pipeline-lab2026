@@ -19,12 +19,17 @@ class RAGState(TypedDict):
     retry_count: int
 
 
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
-retriever = build_retriever(file_path="data/sample.txt", k=3)
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0,
+)
+retriever = build_retriever(
+    file_path="data/sample.txt",
+    k=3,
+)
 
 
 def retrieve(state: RAGState):
-    # 현재 검색 Query로 문서를 검색해 Context를 갱신합니다.
     docs = retriever.invoke(state["question"])
     context = format_docs(docs)
 
@@ -52,7 +57,6 @@ GOOD 또는 BAD 중 하나만 출력하세요.
 
 
 def grade(state: RAGState):
-    # 원래 질문을 기준으로 검색 Context의 충분성을 평가합니다.
     messages = grade_prompt.invoke({
         "question": state["original_question"],
         "context": state["context"],
@@ -69,7 +73,8 @@ def grade(state: RAGState):
 
 rewrite_prompt = ChatPromptTemplate.from_template("""
 다음 질문을 문서 검색에 더 적합한 표현으로 다시 작성하세요.
-원래 의미는 유지하고 검색 질의 한 문장만 출력하세요.
+원래 의미는 유지하세요.
+검색 질의 한 문장만 출력하세요.
 
 [원래 질문]
 {question}
@@ -77,8 +82,9 @@ rewrite_prompt = ChatPromptTemplate.from_template("""
 
 
 def rewrite(state: RAGState):
-    # 검색 결과가 부족하면 현재 Query를 다시 작성합니다.
-    messages = rewrite_prompt.invoke({"question": state["question"]})
+    messages = rewrite_prompt.invoke({
+        "question": state["question"],
+    })
     rewritten = llm.invoke(messages).content.strip()
 
     print("\n[rewrite]")
@@ -92,19 +98,24 @@ def rewrite(state: RAGState):
 
 
 generate_prompt = ChatPromptTemplate.from_template("""
-아래 문서에 있는 내용만 근거로 질문에 답하세요.
-문서에 없는 내용은 추측하지 마세요.
+당신은 제공된 문서를 근거로 답하는 질문-답변 도우미입니다.
+
+규칙:
+1. 아래 문서에 있는 내용만 근거로 답하세요.
+2. 문서에 없는 내용은 추측하지 마세요.
+3. 간결하고 명확하게 답하세요.
 
 [문서]
 {context}
 
-[질문]
+[사용자 원래 질문]
 {question}
+
+[답변]
 """)
 
 
 def generate(state: RAGState):
-    # 충분한 근거를 찾으면 원래 질문에 대한 답변을 생성합니다.
     messages = generate_prompt.invoke({
         "context": state["context"],
         "question": state["original_question"],
@@ -118,15 +129,16 @@ def generate(state: RAGState):
 
 
 def fallback(state: RAGState):
-    # 재검색 횟수를 모두 사용하면 무한 반복하지 않고 종료합니다.
-    answer = "현재 연결된 문서에서 질문에 답할 만한 충분한 근거를 찾지 못했습니다."
+    answer = (
+        "현재 연결된 문서에서 질문에 답할 만한 "
+        "충분한 근거를 찾지 못했습니다."
+    )
     print("\n[fallback]")
     print(answer)
     return {"answer": answer}
 
 
 def decide_after_grade(state: RAGState):
-    # GOOD이면 생성, BAD이면 재검색 또는 종료 경로를 선택합니다.
     if state["relevance"] == "good":
         return "generate"
 
@@ -182,3 +194,7 @@ print("원래 질문:", result["original_question"])
 print("마지막 검색 질문:", result["question"])
 print("재검색 횟수:", result["retry_count"])
 print("최종 답변:", result["answer"])
+
+print("\n[실행 이벤트]")
+for event in graph.stream(initial_state):
+    print(event)
