@@ -4,8 +4,11 @@ from langchain_community.document_loaders import PyPDFLoader
 # TODO 1: data/sample.pdf를 PyPDFLoader로 읽으세요.
 loader = None
 
-# TODO 2: load() 결과를 docs에 저장하세요.
+# TODO 2: loader.load() 결과를 docs에 저장하세요.
 docs = []
+
+if loader is None or not docs:
+    raise SystemExit("TODO 1~2를 모두 완성한 뒤 실행하세요.")
 
 print("페이지 단위 Document 개수:", len(docs))
 
