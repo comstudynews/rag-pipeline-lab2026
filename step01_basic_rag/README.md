@@ -28,6 +28,21 @@ uv run --locked python src/01_basic_rag.py
 
 
 
+## 실습 순서
+
+교재의 **1.8 최소 RAG 구현 예제**와 `practice/src/01_basic_rag.py`의 TODO 번호는 다음과 같이 1:1로 대응합니다.
+
+1. `Document` 3개 준비
+2. `OpenAIEmbeddings` 생성
+3. `InMemoryVectorStore` 생성
+4. `Retriever` 생성
+5. 관련 문서 검색
+6. 검색 결과를 `Context` 문자열로 구성
+7. `Prompt` 구성
+8. `ChatOpenAI` 생성
+
+TODO를 모두 완성한 뒤 실행하면 **검색 결과 → 최종 답변** 순서로 출력됩니다.
+
 ## 확인 원칙
 
 최종 출력만 보지 말고 **입력 → 현재 단계의 처리 → 출력**을 확인합니다. 검색이 포함된 Step에서는 LLM 답변보다 검색된 Document를 먼저 확인합니다.
