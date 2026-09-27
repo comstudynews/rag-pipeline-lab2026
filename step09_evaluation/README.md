@@ -26,6 +26,15 @@ uv sync
 uv run --locked python src/09_evaluation.py
 ```
 
+## 실습 순서
+
+Step 09는 누적형 폴더입니다. Step 00~08의 코드는 완성 상태로 제공되며, 이번 Step에서는 `practice/src/09_evaluation.py`의 평가 함수를 완성합니다.
+
+1. `hit_at_k()`로 Top-K 안의 정답 포함 여부 평가
+2. `reciprocal_rank()`로 정답 문서의 순위 평가
+3. `judge_groundedness()`로 답변의 문서 근거 충실도 평가
+4. Hit Rate, MRR, Groundedness 결과를 각각 확인
+
 ## 확인 원칙
 
 최종 출력만 보지 말고 **입력 → 현재 단계의 처리 → 출력**을 확인합니다. 검색이 포함된 Step에서는 LLM 답변보다 검색된 Document를 먼저 확인합니다.
