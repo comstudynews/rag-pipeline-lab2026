@@ -19,4 +19,6 @@ sentences = [
 ]
 
 vectors = embeddings.embed_documents(sentences)
-print(cosine_similarity(vectors[0], vectors[1]))
+
+print("문장 1 vs 문장 2:", cosine_similarity(vectors[0], vectors[1]))
+print("문장 1 vs 문장 3:", cosine_similarity(vectors[0], vectors[2]))
