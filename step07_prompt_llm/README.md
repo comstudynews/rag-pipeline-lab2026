@@ -26,6 +26,15 @@ uv sync
 uv run --locked python src/07_prompt_llm.py
 ```
 
+## 실습 순서
+
+Step 07은 누적형 폴더입니다. Step 00~06의 코드는 완성 상태로 제공되며, 이번 Step에서는 `practice/src/07_prompt_llm.py`의 TODO 1~3을 완성합니다.
+
+1. 검색된 `Document`를 `[문서 N]` 형식의 `Context`로 구성
+2. 검색 근거만 사용하도록 `ChatPromptTemplate` 작성
+3. `ChatOpenAI(model="gpt-4o-mini", temperature=0)` 생성
+4. 검색 문서와 최종 답변을 함께 확인
+
 
 
 ## 확인 원칙
