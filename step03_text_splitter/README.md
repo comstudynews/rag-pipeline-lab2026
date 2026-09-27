@@ -10,11 +10,9 @@
 
 VS Code에서 **File → Open Folder...**를 선택하고 `step03_text_splitter/practice` 폴더를 엽니다. 완성 코드 확인이 필요할 때만 같은 Step의 `complete` 폴더를 엽니다.
 
-VS Code에서 **Terminal → New Terminal**을 연 뒤 다음 순서로 진행합니다.
+VS Code에서 **Terminal → New Terminal**을 연 뒤 의존성을 동기화합니다.
 
-1. `.env.example`을 `.env`로 복사합니다.
-2. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
-3. 최초 1회 의존성을 동기화합니다.
+이 Step은 로컬 문서를 분할하는 실습이므로 **API Key가 필요하지 않습니다.**
 
 ```bash
 uv sync
@@ -25,6 +23,16 @@ uv sync
 ```bash
 uv run --locked python src/03_splitter.py
 ```
+
+## 실습 순서
+
+Step 03은 누적형 폴더입니다. Step 00~02의 코드는 완성 상태로 제공되며, 이번 Step에서는 `practice/src/03_splitter.py`의 TODO를 완성합니다.
+
+1. `chunk_overlap`을 `20`으로 설정
+2. `add_start_index`를 `True`로 설정
+3. 실행 결과에서 Chunk 수와 `metadata`의 `start_index` 확인
+
+기본 설정은 교재와 동일한 `chunk_size=120`, `chunk_overlap=20`입니다. 교재 3.6의 비교 실습에서는 값을 바꾸어 다시 실행하면서 Chunk 경계와 개수를 비교합니다.
 
 
 
