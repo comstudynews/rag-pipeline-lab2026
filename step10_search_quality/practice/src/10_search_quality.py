@@ -20,11 +20,11 @@ embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 vectorstore = FAISS.from_documents(pages, embeddings)
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
-# TODO 1: Similarity와 MMR Top-3를 비교하세요.
-# TODO 2: BM25로 DEMO-2026-R7을 검색하세요.
-# TODO 3: Dense와 BM25 결과를 unique_merge()로 합쳐 Hybrid 후보를 만드세요.
-# TODO 4: LLM 관련성 점수(0~100)로 후보를 Rerank하세요.
-# TODO 5: ParentDocumentRetriever, MultiQueryRetriever,
+# TODO 1 (10.3~10.4): Similarity와 MMR Top-3를 비교하세요.
+# TODO 2 (10.6): BM25로 DEMO-2026-R7을 검색하세요.
+# TODO 3 (10.7): Dense와 BM25 결과를 unique_merge()로 합쳐 Hybrid 후보를 만드세요.
+# TODO 4 (10.8~10.9): LLM 관련성 점수(0~100)로 후보를 Rerank하세요.
+# TODO 5 (10.13~10.16): ParentDocumentRetriever, MultiQueryRetriever,
 #         EnsembleRetriever, LongContextReorder를 선택 실습으로 추가하세요.
 
 print("TODO: Step 10 검색 품질 고도화를 완성하세요.")
