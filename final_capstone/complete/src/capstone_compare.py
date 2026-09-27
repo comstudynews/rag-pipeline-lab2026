@@ -40,7 +40,7 @@ test_cases = [
     {"question": "노트북은 어디에서 사용할 수 있나요?", "expected_keyword": "2층 디지털자료실"},
     {"question": "음료를 가져가도 되나요?", "expected_keyword": "뚜껑이 있는 용기"},
     {"question": "와이파이를 무료로 쓸 수 있나요?", "expected_keyword": "무료"},
-    {"question": "주차요금은 얼마인가요?", "expected_keyword": ""},
+    {"question": "주차요금은 얼마인가요?", "expected_keyword": None},
 ]
 
 
@@ -48,10 +48,7 @@ def inspect(retriever, question: str):
     return retriever.invoke(question)
 
 
-def hit(retriever, question: str, expected_keyword: str) -> int:
-    retrieved = inspect(retriever, question)
-    if not expected_keyword:
-        return 1
+def hit(retrieved, expected_keyword: str) -> int:
     joined = "\n".join(doc.page_content for doc in retrieved)
     return 1 if expected_keyword in joined else 0
 
@@ -62,11 +59,17 @@ def evaluate(name: str, retriever) -> float:
     print(f"\n=== {name} ===")
     for case in test_cases:
         retrieved = inspect(retriever, case["question"])
-        score = hit(retriever, case["question"], case["expected_keyword"])
-        scores.append(score)
+        expected_keyword = case["expected_keyword"]
 
         print("\n질문:", case["question"])
-        print("판정:", "HIT" if score else "MISS")
+
+        if expected_keyword is None:
+            print("판정: Retrieval Hit Rate 평가 제외 (문서에 없는 질문)")
+        else:
+            score = hit(retrieved, expected_keyword)
+            scores.append(score)
+            print("판정:", "HIT" if score else "MISS")
+
         for i, doc in enumerate(retrieved, start=1):
             print(f"  [{i}] {doc.page_content}")
 
@@ -82,17 +85,9 @@ print("\n=== 비교 ===")
 print("Baseline Hit Rate:", round(baseline_score, 3))
 print("Improved Hit Rate:", round(improved_score, 3))
 
-question = "기본 대출기간과 연장 조건을 알려 주세요."
-retrieved_docs = improved.invoke(question)
-
-context = "\n\n".join(
-    f"[문서 {i}]\n{doc.page_content}"
-    for i, doc in enumerate(retrieved_docs, start=1)
-)
-
 prompt = ChatPromptTemplate.from_template("""
 아래 문서만 근거로 질문에 답하세요.
-문서에 없는 내용은 추측하지 마세요.
+문서에 없는 내용은 추측하지 말고 "제공된 문서에서 확인할 수 없습니다."라고 답하세요.
 
 [문서]
 {context}
@@ -103,15 +98,29 @@ prompt = ChatPromptTemplate.from_template("""
 
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
-answer = llm.invoke(
-    prompt.invoke({
-        "context": context,
-        "question": question,
-    })
-).content
 
+def answer_with_retriever(question: str) -> str:
+    retrieved_docs = improved.invoke(question)
+    context = "\n\n".join(
+        f"[문서 {i}]\n{doc.page_content}"
+        for i, doc in enumerate(retrieved_docs, start=1)
+    )
+    return llm.invoke(
+        prompt.invoke({
+            "context": context,
+            "question": question,
+        })
+    ).content
+
+
+question = "기본 대출기간과 연장 조건을 알려 주세요."
 print("\n=== 개선 Pipeline 최종 답변 ===")
-print(answer)
+print(answer_with_retriever(question))
+
+no_answer_question = "주차요금은 얼마인가요?"
+print("\n=== 문서에 없는 질문 확인 ===")
+print("질문:", no_answer_question)
+print("답변:", answer_with_retriever(no_answer_question))
 
 print("\n※ 작은 샘플에서는 두 Hit Rate가 같을 수 있습니다.")
 print("실제 종합실습에서는 고정된 8~10개 이상의 질문셋으로")
