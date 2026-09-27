@@ -36,16 +36,17 @@ def route_by_length(state: GraphState):
     raise NotImplementedError("TODO 3: route_by_length를 완성하세요.")
 
 
-# TODO 4: StateGraph를 만들고 normalize/count_length/short/long Node를 등록하세요.
+# Graph 구성
 builder = StateGraph(GraphState)
 
-# 아래 TODO를 교재 12.8~12.9 순서에 따라 완성합니다.
-# TODO 4-1: builder.add_node(...)로 네 Node를 등록하세요.
-# TODO 4-2: START → normalize → count_length까지 일반 Edge를 연결하세요.
-# TODO 5: count_length 뒤에 route_by_length를 이용한 Conditional Edge를 연결하세요.
+# TODO 4: normalize/count_length/short/long Node를 등록하세요.
+
+# TODO 5: START → normalize → count_length까지 일반 Edge를 연결하고,
+#         count_length 뒤에 route_by_length를 이용한 Conditional Edge를 연결하세요.
+
 # TODO 6: short / long을 END에 연결하고 graph = builder.compile()로 컴파일하세요.
 
-# TODO를 완성한 뒤 아래 코드를 주석 해제해 실행합니다.
+# TODO를 모두 완성한 뒤 아래 코드를 주석 해제해 실행합니다.
 # result = graph.invoke({
 #     "question": "RAG는 왜 필요한가요?",
 #     "normalized_question": "",
