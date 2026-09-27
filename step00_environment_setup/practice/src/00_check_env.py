@@ -25,7 +25,19 @@ for name, required in env_vars:
     # TODO: os.getenv()로 값을 확인하고 설정됨/없음과 필수/선택을 출력하세요.
     print(name, "TODO", "(필수)" if required else "(선택)")
 
-# TODO 3: 핵심 패키지를 import하고 설치 버전을 출력하세요.
+# 핵심 패키지 import 코드는 제공되어 있습니다.
+# import 오류가 발생하면 해당 패키지 설치 상태를 먼저 확인하세요.
+import faiss
+import langchain
+import langchain_classic
+import langchain_community
+import langchain_openai
+import langchain_text_splitters
+import langgraph
+import pypdf
+import rank_bm25
+
+# TODO 3: 핵심 패키지의 설치 버전을 출력하세요.
 packages = [
     "langchain",
     "langchain-openai",
@@ -56,4 +68,4 @@ print("\n[Provider 통합 패키지]")
 for module, label in provider_modules.items():
     print(label, "TODO")
 
-print("\nTODO: Step 00 환경 확인 코드를 완성하세요.")
+print("\nTODO 2~4를 완성한 뒤 출력 내용을 확인하세요.")
