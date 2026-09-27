@@ -29,6 +29,20 @@ uv sync
 uv run --locked python src/capstone_compare.py
 ```
 
+## 실습 코드와 교재 대응
+
+종합실습은 `practice/src/capstone_compare.py`의 TODO 1~7을 교재 Step 1~10 흐름에 맞춰 진행합니다.
+
+1. 문제와 문서 범위 정의
+2. Baseline RAG 구성
+3. 고정 테스트 질문셋 작성
+4. Baseline Retrieval 평가
+5. 문제에 맞는 개선 전략 적용
+6. 같은 질문셋으로 전·후 비교 및 Generation 확인
+7. `README.md`, `results/design.md`, `results/evaluation.md` 정리
+
+제공된 예시 완성 코드는 **Similarity Baseline과 MMR 개선안**을 비교합니다. 다른 개선 전략을 선택해도 되며, 교재의 핵심은 선택한 전략과 관찰된 문제를 연결하고 동일 질문셋으로 비교하는 것입니다.
+
 ---
 
 **종합실습 목표**
