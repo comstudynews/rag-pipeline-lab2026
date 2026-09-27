@@ -8,31 +8,118 @@ from rag_core import build_retriever, format_docs
 
 load_dotenv()
 
-retriever = build_retriever(file_path="data/sample.txt", k=3)
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+retriever = build_retriever(
+    file_path="data/sample.txt",
+    k=3,
+)
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0,
+)
 
 test_cases = [
-    {"question": "평일 운영시간은 언제인가요?", "expected_keyword": "오전 9시부터 오후 9시"},
-    {"question": "한 사람이 빌릴 수 있는 책은 최대 몇 권인가요?", "expected_keyword": "최대 5권"},
-    {"question": "노트북은 어디에서 사용할 수 있나요?", "expected_keyword": "2층 디지털자료실"},
+    {
+        "question": "평일 운영시간은 언제인가요?",
+        "expected_keyword": "오전 9시부터 오후 9시",
+    },
+    {
+        "question": "한 사람이 빌릴 수 있는 책은 최대 몇 권인가요?",
+        "expected_keyword": "최대 5권",
+    },
+    {
+        "question": "노트북은 어디에서 사용할 수 있나요?",
+        "expected_keyword": "2층 디지털자료실",
+    },
 ]
 
 
 def hit_at_k(question: str, expected_keyword: str) -> int:
-    # TODO 1 (9.3): Top-K 결과 안에 expected_keyword가 있으면 1, 없으면 0을 반환하세요.
+    docs = retriever.invoke(question)
+    joined = "\n".join(doc.page_content for doc in docs)
+
+    # TODO 1 (9.3): expected_keyword가 Top-K 결과 안에 있으면 1, 없으면 0을 반환하세요.
     raise NotImplementedError
 
 
 def reciprocal_rank(question: str, expected_keyword: str) -> float:
+    docs = retriever.invoke(question)
+
     # TODO 2 (9.4): expected_keyword가 처음 등장한 순위의 역수를 반환하세요.
     raise NotImplementedError
 
 
+answer_prompt = ChatPromptTemplate.from_template("""
+아래 문서만 근거로 질문에 답하세요.
+문서에서 확인할 수 없으면 확인할 수 없다고 답하세요.
+
+[문서]
+{context}
+
+[질문]
+{question}
+""")
+
+
+def generate_answer(question: str, docs) -> str:
+    context = format_docs(docs)
+    messages = answer_prompt.invoke({
+        "context": context,
+        "question": question,
+    })
+    return llm.invoke(messages).content
+
+
 def judge_groundedness(question: str, context: str, answer: str) -> int:
-    # TODO 3 (9.7): LLM으로 답변의 문서 근거 충실도를 1~5점으로 평가하세요.
+    prompt = f"""
+당신은 RAG 답변 평가자입니다.
+아래 답변이 제공된 문서에 얼마나 충실하게 근거하는지 1~5점으로 평가하세요.
+
+5점: 답변의 핵심 내용이 모두 문서에 명확히 근거함
+4점: 거의 모두 근거하며 사소한 표현 차이만 있음
+3점: 일부 근거하지만 해석이나 추가 내용이 섞임
+2점: 근거가 부족하고 추측이 많음
+1점: 문서와 무관하거나 모순됨
+
+숫자 하나만 출력하세요.
+
+[질문]
+{question}
+
+[문서]
+{context}
+
+[답변]
+{answer}
+"""
+    result = llm.invoke(prompt).content.strip()
+
+    # TODO 3 (9.7): 결과에서 1~5 사이 점수를 추출해 정수로 반환하세요.
     raise NotImplementedError
 
 
-# TODO 4 (9.8): Hit Rate와 MRR을 계산하세요.
-# TODO 5 (9.8): 검색 문서로 답변을 생성한 뒤 Groundedness를 평가하세요.
-print("TODO: Retrieval 평가와 Generation 평가를 완성하세요.")
+hits = []
+rr_scores = []
+
+print("=== Retrieval 평가 ===")
+for case in test_cases:
+    hit = hit_at_k(case["question"], case["expected_keyword"])
+    rr = reciprocal_rank(case["question"], case["expected_keyword"])
+    hits.append(hit)
+    rr_scores.append(rr)
+    print(case["question"], "→", "HIT" if hit else "MISS", "RR =", round(rr, 3))
+
+print("Hit Rate:", round(sum(hits) / len(hits), 3))
+print("MRR:", round(sum(rr_scores) / len(rr_scores), 3))
+
+print("\n=== Generation 평가 ===")
+for case in test_cases:
+    question = case["question"]
+    docs = retriever.invoke(question)
+    context = format_docs(docs)
+    answer = generate_answer(question, docs)
+    score = judge_groundedness(question, context, answer)
+
+    print("\n============================")
+    print("질문:", question)
+    print("답변:", answer)
+    print("Groundedness:", score, "/ 5")

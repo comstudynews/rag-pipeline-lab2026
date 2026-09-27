@@ -32,8 +32,7 @@ PDF 선택 실습:
 uv run --locked python src/02_pdf_loader.py
 ```
 
-텍스트를 선택·복사할 수 있는 PDF를 `data/sample.pdf`로 준비합니다.
-
+`data/sample.pdf`는 텍스트 추출을 확인할 수 있는 예제 PDF로 함께 제공됩니다.
 
 ## 확인 원칙
 
