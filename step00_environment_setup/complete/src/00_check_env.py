@@ -25,18 +25,6 @@ for name, required in env_vars:
     label = "필수" if required else "선택"
     print(f"{name}: {status} ({label})")
 
-legacy_vars = [
-    "LANGCHAIN_API_KEY",
-    "LANGCHAIN_TRACING_V2",
-    "LANGCHAIN_PROJECT",
-]
-legacy_found = [name for name in legacy_vars if os.getenv(name)]
-if legacy_found:
-    print("\n[참고] 예전 LangChain/LangSmith 환경변수가 감지되었습니다:")
-    for name in legacy_found:
-        print("-", name)
-    print("현재 실습은 LANGSMITH_* 표기를 기본으로 사용합니다.")
-
 import faiss
 import langchain
 import langchain_classic
@@ -74,5 +62,19 @@ provider_modules = {
 print("\n[Provider 통합 패키지]")
 for module, label in provider_modules.items():
     print(label + ":", "설치됨" if find_spec(module) else "미설치")
+
+issues = []
+if sys.version_info[:2] != (3, 11):
+    issues.append(f"Python 3.11이 필요합니다. 현재 버전: {sys.version.split()[0]}")
+
+for name, required in env_vars:
+    if required and not os.getenv(name):
+        issues.append(f"필수 환경변수가 없습니다: {name}")
+
+if issues:
+    print("\n[확인 필요]")
+    for issue in issues:
+        print("-", issue)
+    raise SystemExit(1)
 
 print("\n핵심 환경 확인: OK")
