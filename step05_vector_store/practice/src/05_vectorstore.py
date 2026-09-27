@@ -21,11 +21,12 @@ embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 # TODO 1: FAISS.from_documents(documents=chunks, embedding=embeddings)를 완성하세요.
 vectorstore = None
 
-if vectorstore is None:
-    raise SystemExit("TODO: FAISS Vector Store를 생성하세요.")
+# TODO 2: 아래 query를 k=3으로 유사도 검색하세요.
+query = "책은 며칠 동안 빌릴 수 있나요?"
+results = None
 
-# TODO 2: "책은 며칠 동안 빌릴 수 있나요?"를 k=3으로 검색하세요.
-results = []
+if vectorstore is None or results is None:
+    raise SystemExit("TODO 1~2를 모두 완성한 뒤 실행하세요.")
 
 for i, doc in enumerate(results, start=1):
     print(f"\n[{i}]")
