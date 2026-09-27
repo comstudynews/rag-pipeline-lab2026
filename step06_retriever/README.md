@@ -26,6 +26,14 @@ uv sync
 uv run --locked python src/06_retriever.py
 ```
 
+## 실습 순서
+
+Step 06은 누적형 폴더입니다. Step 00~05의 코드는 완성 상태로 제공되며, 이번 Step에서는 `practice/src/06_retriever.py`에서 **Vector Store를 Retriever로 변환하는 부분**을 완성합니다.
+
+1. `vectorstore.as_retriever(search_kwargs={"k": 3})` 구성
+2. `retriever.invoke(question)`으로 관련 `Document` 검색
+3. 상위 결과에 토요일 운영시간 Chunk가 포함되는지 확인
+
 
 
 ## 확인 원칙
