@@ -10,11 +10,9 @@ State, Node, Edge, Conditional Edge로 RAG Workflow의 흐름 제어를 이해�
 
 VS Code에서 **File → Open Folder...**를 선택하고 `step12_langgraph/practice` 폴더를 엽니다. 완성 코드 확인이 필요할 때만 같은 Step의 `complete` 폴더를 엽니다.
 
-VS Code에서 **Terminal → New Terminal**을 연 뒤 다음 순서로 진행합니다.
+VS Code에서 **Terminal → New Terminal**을 연 뒤 의존성을 동기화합니다.
 
-1. `.env.example`을 `.env`로 복사합니다.
-2. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
-3. 최초 1회 의존성을 동기화합니다.
+이 Step은 LangGraph의 흐름 제어만 확인하므로 **API Key가 필요하지 않습니다.**
 
 ```bash
 uv sync
@@ -25,6 +23,18 @@ uv sync
 ```bash
 uv run --locked python src/12_langgraph_basic.py
 ```
+
+## 실습 순서
+
+Step 12는 누적형 폴더입니다. Step 00~11의 코드는 완성 상태로 제공되며, 이번 Step에서는 `practice/src/12_langgraph_basic.py`를 완성합니다.
+
+1. **12.6~12.7** State를 갱신하는 Node 구현
+2. **12.8** 일반 Edge 연결
+3. **12.9** Conditional Edge와 분기 함수 구현
+4. `short` / `long` 경로를 `END`에 연결하고 Graph 컴파일
+5. 실행 결과의 최종 State 확인
+
+이 Step은 LangGraph의 State/Node/Edge 구조만 다루므로 **OpenAI API Key가 필요하지 않습니다.**
 
 ## 확인 원칙
 
