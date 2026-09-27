@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+from langchain_classic.retrievers.multi_query import MultiQueryRetriever
 from langchain_openai import ChatOpenAI
 
 from rag_core import build_retriever
