@@ -10,11 +10,9 @@ TXT를 LangChain Document로 읽고, 선택 실습으로 PDF Loader를 확인합
 
 VS Code에서 **File → Open Folder...**를 선택하고 `step02_document_loader/practice` 폴더를 엽니다. 완성 코드 확인이 필요할 때만 같은 Step의 `complete` 폴더를 엽니다.
 
-VS Code에서 **Terminal → New Terminal**을 연 뒤 다음 순서로 진행합니다.
+VS Code에서 **Terminal → New Terminal**을 연 뒤 의존성을 동기화합니다.
 
-1. `.env.example`을 `.env`로 복사합니다.
-2. 기본 실습은 `OPENAI_API_KEY`를 설정합니다.
-3. 최초 1회 의존성을 동기화합니다.
+이 Step의 TXT/PDF Loader 실습은 로컬 파일만 읽으므로 **API Key가 필요하지 않습니다.**
 
 ```bash
 uv sync
@@ -33,6 +31,22 @@ uv run --locked python src/02_pdf_loader.py
 ```
 
 `data/sample.pdf`는 텍스트 추출을 확인할 수 있는 예제 PDF로 함께 제공됩니다.
+
+## 실습 파일과 순서
+
+Step 02는 누적형 폴더입니다. `src/00_check_env.py`와 `src/01_basic_rag.py`는 앞 Step의 완성 상태로 제공되고, 이번 Step에서는 Loader 파일을 완성합니다.
+
+### TXT 기본 실습 — `src/02_loader.py`
+
+1. `TextLoader` 생성
+2. `loader.load()`로 `Document` 목록 생성
+
+### PDF 선택 실습 — `src/02_pdf_loader.py`
+
+1. `PyPDFLoader` 생성
+2. `loader.load()`로 페이지 단위 `Document` 목록 생성
+
+`practice/data/`와 `complete/data/`에는 모두 `sample.txt`와 `sample.pdf`가 포함되어 있습니다.
 
 ## 확인 원칙
 
