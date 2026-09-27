@@ -33,6 +33,15 @@ uv run --locked python src/04_embedding.py
 uv run --locked python src/04_similarity.py
 ```
 
+## 실습 순서
+
+Step 04는 누적형 폴더입니다. Step 00~03의 코드는 완성 상태로 제공되며, 이번 Step에서는 다음 두 파일을 완성합니다.
+
+1. `src/04_embedding.py`: `OpenAIEmbeddings(model="text-embedding-3-small")` 생성
+2. `src/04_similarity.py`: Cosine Similarity 함수 완성
+
+두 실습 모두 OpenAI Embedding API를 호출하므로 `OPENAI_API_KEY`가 필요합니다.
+
 ## 확인 원칙
 
 최종 출력만 보지 말고 **입력 → 현재 단계의 처리 → 출력**을 확인합니다. 검색이 포함된 Step에서는 LLM 답변보다 검색된 Document를 먼저 확인합니다.
