@@ -22,12 +22,12 @@ class RAGState(TypedDict):
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 retriever = build_retriever(file_path="data/sample.txt", k=3)
 
-# TODO 1: retrieve Node — 현재 question으로 검색하고 context를 저장하세요.
-# TODO 2: grade Node — original_question 기준으로 GOOD/BAD를 판단하세요.
-# TODO 3: rewrite Node — 검색용 question을 다시 쓰고 retry_count를 1 증가시키세요.
-# TODO 4: generate Node — original_question에 답하세요.
-# TODO 5: fallback Node — 충분한 근거를 찾지 못했다는 답변을 저장하세요.
-# TODO 6: decide_after_grade — GOOD / rewrite / fallback 경로를 결정하세요.
-# TODO 7: rewrite → retrieve Loop를 만들고 retry_count >= 2에서 종료하세요.
+# TODO 1 (13.5~13.6): retrieve Node — 현재 question으로 검색하고 context를 저장하세요.
+# TODO 2 (13.5~13.6): grade Node — original_question 기준으로 GOOD/BAD를 판단하세요.
+# TODO 3 (13.5~13.7): rewrite Node — 검색용 question을 다시 쓰고 retry_count를 1 증가시키세요.
+# TODO 4 (13.5~13.6): generate Node — original_question에 답하세요.
+# TODO 5 (13.5~13.7): fallback Node — 충분한 근거를 찾지 못했다는 답변을 저장하세요.
+# TODO 6 (13.7~13.8): decide_after_grade — GOOD / rewrite / fallback 경로를 결정하세요.
+# TODO 7 (13.7~13.8): rewrite → retrieve Loop를 만들고 retry_count >= 2에서 종료하세요.
 
 print("TODO: Step 13 Agentic RAG를 완성하세요.")
