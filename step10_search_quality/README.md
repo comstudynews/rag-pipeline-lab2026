@@ -26,6 +26,19 @@ uv sync
 uv run --locked python src/10_search_quality.py
 ```
 
+## 실습 순서
+
+Step 10은 누적형 폴더입니다. Step 00~09의 코드는 완성 상태로 제공되며, 이번 Step에서는 `practice/src/10_search_quality.py`의 TODO를 교재 순서대로 완성합니다.
+
+1. Similarity와 MMR 비교
+2. BM25 키워드 검색
+3. Dense + BM25 Hybrid 후보 구성
+4. LLM 기반 Reranking
+5. ParentDocumentRetriever
+6. MultiQueryRetriever
+7. EnsembleRetriever
+8. LongContextReorder
+
 ## 확인 원칙
 
 최종 출력만 보지 말고 **입력 → 현재 단계의 처리 → 출력**을 확인합니다. 검색이 포함된 Step에서는 LLM 답변보다 검색된 Document를 먼저 확인합니다.
