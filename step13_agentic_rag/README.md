@@ -1,4 +1,4 @@
-# Step 13. Agentic RAG
+# Step 13. Agentic RAG | Self · Corrective · Adaptive RAG
 
 Retrieve → Grade → Rewrite → Retry/Fallback 흐름과 종료 조건을 구현합니다.
 
