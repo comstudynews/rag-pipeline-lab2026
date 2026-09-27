@@ -36,7 +36,16 @@ prompt = None
 # TODO 8: ChatOpenAI(model="gpt-4o-mini", temperature=0)를 만드세요.
 llm = None
 
-if prompt is None or llm is None:
+if (
+    not pages
+    or embeddings is None
+    or vectorstore is None
+    or retriever is None
+    or not retrieved_docs
+    or not context
+    or prompt is None
+    or llm is None
+):
     raise SystemExit("TODO 1~8을 모두 완성한 뒤 실행하세요.")
 
 messages = prompt.invoke({"context": context, "question": question})
