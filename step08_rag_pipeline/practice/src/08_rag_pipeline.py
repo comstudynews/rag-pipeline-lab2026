@@ -27,6 +27,11 @@ chain = None
 question = "도서관에서 노트북은 어디에서 사용할 수 있나요?"
 
 if chain is None:
-    raise SystemExit("TODO: LCEL RAG Chain을 완성하세요.")
+    raise SystemExit("TODO 1~3을 모두 완성한 뒤 실행하세요.")
 
-print(chain.invoke(question))
+answer = chain.invoke(question)
+
+print("[질문]")
+print(question)
+print("\n[답변]")
+print(answer)
