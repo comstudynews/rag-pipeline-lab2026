@@ -26,6 +26,14 @@ uv sync
 uv run --locked python src/05_vectorstore.py
 ```
 
+## 실습 순서
+
+Step 05는 누적형 폴더입니다. Step 00~04의 코드는 완성 상태로 제공되며, 이번 Step에서는 `practice/src/05_vectorstore.py`의 TODO를 완성합니다.
+
+1. `FAISS.from_documents(...)`로 Vector Store 생성
+2. `similarity_search(query, k=3)`로 관련 문서 검색
+3. 검색된 `page_content`와 `metadata` 확인
+
 
 
 ## 확인 원칙
