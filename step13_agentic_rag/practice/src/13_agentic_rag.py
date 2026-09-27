@@ -116,10 +116,10 @@ builder.add_edge("retrieve", "grade")
 
 # TODO 7 (13.7~13.8):
 # grade 결과에 따라 generate / rewrite / fallback으로 분기하고,
-# rewrite → retrieve Loop와 generate/fallback → END를 연결하세요.
+# rewrite → retrieve Loop와 generate/fallback → END를 연결한 뒤
+# graph = builder.compile()로 Graph를 컴파일하세요.
 
-graph = builder.compile()
-
+# TODO를 모두 완성한 다음 아래 초기 State로 graph.invoke() 또는 graph.stream()을 실행합니다.
 question = "책 빌리면 며칠 안에 돌려줘야 하나요?"
 
 initial_state = {
