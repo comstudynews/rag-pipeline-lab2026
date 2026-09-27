@@ -1,4 +1,4 @@
-# Step 12. LangGraph 입문
+# Step 12. RAG Flow Pattern과 LangGraph 입문
 
 State, Node, Edge, Conditional Edge로 RAG Workflow의 흐름 제어를 이해합니다.
 
